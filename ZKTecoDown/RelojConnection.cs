@@ -36,19 +36,28 @@ namespace ZKTecoDown
         private zkemkeeper.CZKEM reloj;
         private List<User> userInfo;
         private List<AttendanceRecord> attendanceRecords;
-        public RelojConnection()
+        RelojConnection()
         {
             reloj = new zkemkeeper.CZKEM();
             userInfo = new List<User>();
             attendanceRecords = new List<AttendanceRecord>();
         }
 
-        public bool connect(string ip, int port)
+        ~RelojConnection()
+        {
+            this.Disconnect();
+        }
+
+        public bool Connect(string ip, int port)
         {
             return reloj.Connect_Net(ip, port);
         }
 
-        public bool downloadUsers()
+        public void Disconnect()
+        {
+            reloj.Disconnect();
+        }
+        public bool DownloadUsers()
         {
             if (!reloj.ReadAllUserID(0))
                 return false;
@@ -69,7 +78,7 @@ namespace ZKTecoDown
             return true;
         }
 
-        public bool downloadAttendance(bool eraseAfterward)
+        public bool DownloadAttendance(bool eraseAfterward)
         {
             if (!reloj.ReadGeneralLogData(0))
                 return false;
@@ -97,7 +106,7 @@ namespace ZKTecoDown
             return true;
         }
 
-        public bool deleteUser(string ID)
+        public bool DeleteUser(string ID)
         {
             return reloj.SSR_DeleteEnrollData(0, ID, 12);
         }
