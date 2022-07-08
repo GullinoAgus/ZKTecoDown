@@ -12,7 +12,7 @@ namespace ZKTecoDown
 
         private void Form_Load(object sender, EventArgs e)
         {
-            Config.Initialize("./conf.ini");
+            Config.Initialize(@"./conf.ini");
             this.Text += " (" + Config.initconf.Company + ")";
         }
     }
