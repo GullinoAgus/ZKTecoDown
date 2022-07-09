@@ -16,7 +16,14 @@ namespace ZKTecoDown
         public bool Enabled;
 
     }
-
+    /* InOutModes
+        0-Check-In Default
+        1-Check-Out
+        2-Break-Out
+        3-Break-In
+        4-OT-In
+        5-OT-Out
+    */
     internal struct AttendanceRecord
     {
         public string ID;
@@ -31,30 +38,44 @@ namespace ZKTecoDown
         public int WorkCode;
     }
 
-    internal class RelojConnection
+    internal class MachineConnection
     {
         private zkemkeeper.CZKEM reloj;
-        private List<User> userInfo;
-        private List<AttendanceRecord> attendanceRecords;
-        RelojConnection()
+        private bool Connected;
+        public readonly string MachineAlias;
+        public readonly List<User> userInfo;
+        public readonly List<AttendanceRecord> attendanceRecords;
+        public MachineConnection()
         {
             reloj = new zkemkeeper.CZKEM();
+            Connected = false;
             userInfo = new List<User>();
             attendanceRecords = new List<AttendanceRecord>();
         }
 
-        ~RelojConnection()
+        ~MachineConnection()
         {
             this.Disconnect();
         }
 
-        public bool Connect(string ip, int port)
+        public bool Connect(string MachineAlias, string ip, int port)
         {
-            return reloj.Connect_Net(ip, port);
+            if (reloj.Connect_Net(ip, port))
+            {
+                Connected = true;
+                return Connected;
+            }
+            return Connected;
+        }
+
+        public bool isConnected()
+        {
+            return Connected;
         }
 
         public void Disconnect()
         {
+            Connected = false;
             reloj.Disconnect();
         }
         public bool DownloadUsers()

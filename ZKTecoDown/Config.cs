@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Security.Cryptography;
+using System.Diagnostics;
 using System.Text;
 
 namespace ZKTecoDown
@@ -8,8 +9,18 @@ namespace ZKTecoDown
     {
         public string Company;
         public int MachineQuant;
+        public int[] DLTime;
         public string DatabasePath;
-        public string RecordPath;
+        public string LogsPath;
+
+        public InitData()
+        {
+            Company = "Default";
+            MachineQuant = 0;
+            DLTime = new int[2];
+            DatabasePath = "";
+            LogsPath = "";
+        }
     }
 
     internal class Config
@@ -25,12 +36,12 @@ namespace ZKTecoDown
         {
             try
             {
-                using (FileStream iniFile = new FileStream(path2ini, FileMode.Open, FileAccess.Read))
+                using (FileStream iniFile = new(path2ini, FileMode.Open, FileAccess.Read))
                 { 
-                    iniFile.Seek(0, SeekOrigin.Begin);
                     byte[] data = new byte[iniFile.Length-16];
                     byte[] nonce = new byte[16];
-                    byte[] tag = new byte[16];
+
+                    iniFile.Seek(0, SeekOrigin.Begin);
                     iniFile.Read(nonce, 0, 16);
                     iniFile.Read(data, 0, data.Length);
                     
@@ -39,13 +50,27 @@ namespace ZKTecoDown
                     var hasher = MD5.Create();
                     var HashedKey = hasher.ComputeHash(key);
                     var dataString = DecryptStringFromBytes_Aes(data, HashedKey, nonce);
+
                     initconf = JsonConvert.DeserializeObject<InitData>(dataString);
+
+                    var tempConf = initconf;
+                    tempConf.DatabasePath = Environment.ExpandEnvironmentVariables(initconf.DatabasePath);
+                    tempConf.LogsPath = Environment.ExpandEnvironmentVariables(initconf.LogsPath);
+                    initconf = tempConf;
+
+                    Directory.CreateDirectory(initconf.DatabasePath);
+                    Directory.CreateDirectory(initconf.LogsPath);
+
 
                 }
             }
             catch (Exception ex)
             { 
-                MessageBox.Show(ex.ToString());
+                Debug.WriteLine("Exception at Config.Initialize" + ex.ToString());
+                MessageBox.Show("Error en inicializacion. Revise la configuracion del programa.", 
+                    "Error", 
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Error);
                 return false;
             }
             
