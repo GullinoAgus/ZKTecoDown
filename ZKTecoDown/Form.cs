@@ -228,7 +228,7 @@ namespace ZKTecoDown
             var connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" +
                 Config.initconf.DatabasePath + "Descargas.mdb";
             // Fichadas Alias dd-mm-yyyy_hh:mm:ss
-            string LogFilePath = Config.initconf.LogsPath + $"Fichadas {MachConn.MachineAlias} {DateTime.Now:dd-MM-yyyy_HH:mm:ss}";
+            string LogFilePath = Config.initconf.LogsPath + $"Fichadas {MachConn.MachineAlias} {DateTime.Now:dd-MM-yyyy_HH:mm:ss}.rei";
 
             using (StreamWriter LogsFile = File.CreateText(LogFilePath))
             using (OleDbConnection connection = new(connectionString))
@@ -250,16 +250,16 @@ namespace ZKTecoDown
                             inoutType = "S";
                             break;
                         case 2:
-                            inoutType = "SR";
+                            inoutType = "1";
                             break;
                         case 3:
-                            inoutType = "ER";
+                            inoutType = "2";
                             break;
                         case 4:
-                            inoutType = "OTE";
+                            inoutType = "3";
                             break;
                         case 5:
-                            inoutType = "OTS";
+                            inoutType = "4";
                             break;
                         default:
                             inoutType = "E";
