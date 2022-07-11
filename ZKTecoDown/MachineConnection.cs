@@ -40,17 +40,15 @@ namespace ZKTecoDown
 
     internal class MachineConnection
     {
-        private zkemkeeper.CZKEM reloj;
-        private bool Connected;
-        public readonly string MachineAlias;
-        public readonly List<User> userInfo;
-        public readonly List<AttendanceRecord> attendanceRecords;
+        private zkemkeeper.CZKEM Machine = new();
+        private bool Connected = false;
+        private int LastErrorCode = 0;
+        public readonly string MachineAlias = new("Default");
+        public readonly List<User> userInfo = new();
+        public readonly List<AttendanceRecord> attendanceRecords = new();
+
         public MachineConnection()
         {
-            reloj = new zkemkeeper.CZKEM();
-            Connected = false;
-            userInfo = new List<User>();
-            attendanceRecords = new List<AttendanceRecord>();
         }
 
         ~MachineConnection()
@@ -60,12 +58,16 @@ namespace ZKTecoDown
 
         public bool Connect(string MachineAlias, string ip, int port)
         {
-            if (reloj.Connect_Net(ip, port))
+            if (Machine.Connect_Net(ip, port))
             {
                 Connected = true;
                 return Connected;
             }
-            return Connected;
+            else
+            {
+                Machine.GetLastError(ref LastErrorCode);
+                return Connected;
+            }
         }
 
         public bool isConnected()
@@ -76,18 +78,21 @@ namespace ZKTecoDown
         public void Disconnect()
         {
             Connected = false;
-            reloj.Disconnect();
+            Machine.Disconnect();
         }
         public bool DownloadUsers()
         {
-            if (!reloj.ReadAllUserID(0))
+            if (!Machine.ReadAllUserID(0))
+            {
+                Machine.GetLastError(ref LastErrorCode);
                 return false;
+            }
 
             bool reading = true;
-            User tmpusr = new User();
+            User tmpusr = new();
             while (reading)
             {
-                reading = reloj.SSR_GetAllUserInfo(0,
+                reading = Machine.SSR_GetAllUserInfo(0,
                                                    out tmpusr.ID,
                                                    out tmpusr.Name,
                                                    out tmpusr.Password,
@@ -101,14 +106,17 @@ namespace ZKTecoDown
 
         public bool DownloadAttendance(bool eraseAfterward)
         {
-            if (!reloj.ReadGeneralLogData(0))
+            if (!Machine.ReadGeneralLogData(0))
+            {
+                Machine.GetLastError(ref LastErrorCode);
                 return false;
+            }
 
             bool reading = true;
-            AttendanceRecord tmpattrec = new AttendanceRecord();
+            AttendanceRecord tmpattrec = new();
             while (reading)
             {
-                reading = reloj.SSR_GetGeneralLogData(0,
+                reading = Machine.SSR_GetGeneralLogData(0,
                                                    out tmpattrec.ID,
                                                    out tmpattrec.VerifyMode,
                                                    out tmpattrec.InOut,
@@ -123,13 +131,26 @@ namespace ZKTecoDown
 
             }
             if (eraseAfterward)
-                reloj.ClearGLog(0);
+            {
+                if (Machine.ClearGLog(0))
+                {
+                    Machine.GetLastError(ref LastErrorCode);
+                    return false;
+                }
+            }
+                    
             return true;
         }
 
         public bool DeleteUser(string ID)
         {
-            return reloj.SSR_DeleteEnrollData(0, ID, 12);
+            if (!Machine.SSR_DeleteEnrollData(0, ID, 12))
+            {
+                Machine.GetLastError(LastErrorCode);
+                return false;
+            }
+
+            return true;
         }
 
 

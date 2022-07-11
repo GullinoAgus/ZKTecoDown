@@ -5,17 +5,17 @@ using System.Diagnostics;
 namespace ZKTecoDown
 {
 
-    public partial class MachineDL : System.Windows.Forms.Form
+    public partial class MachineDL : Form
     {
-        private NotifyIcon trayIcon;
-        private ContextMenuStrip contextMenu;
-        private ToolStripMenuItem exitMenuItem;
-        private IJobDetail job;
-        private ITrigger trigger;
-        private IScheduler scheduler;
-        private List<Tuple<string, string, int>> IPList;
-        private MachineConnection MachConn;
-        private int CurrentConnectedIndex;
+        private NotifyIcon trayIcon = new();
+        private ContextMenuStrip contextMenu = new();
+        private ToolStripMenuItem exitMenuItem = new("Salir");
+        private IJobDetail? job;
+        private ITrigger? trigger;
+        private IScheduler? scheduler;
+        private List<Tuple<string, string, int>> IPList = new();
+        private MachineConnection MachConn = new();
+        private int CurrentConnectedIndex = -1;
         public MachineDL()
         {
 
@@ -23,16 +23,8 @@ namespace ZKTecoDown
 
             Debug.WriteLine("Starting app...");
 
-            MachConn = new MachineConnection();
-            IPList = new List<Tuple<string, string, int>>();
-            CurrentConnectedIndex = -1;
             Icon = new Icon(@"./icon.ico");
-            trayIcon = new NotifyIcon();
-            contextMenu = new ContextMenuStrip();
-            exitMenuItem = new ToolStripMenuItem
-            {
-                Text = "Salir"
-            };
+
             exitMenuItem.Click += new EventHandler(Exit);
 
             contextMenu.Items.Add(exitMenuItem);
@@ -54,8 +46,11 @@ namespace ZKTecoDown
             GetIpList();
 
             BuildScheduleJob();
-        }
 
+            HideManagmentOptions();
+        }
+        
+        #region Initialization
         private void GetIpList()
         {
             var connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" +
@@ -72,7 +67,11 @@ namespace ZKTecoDown
                 {
                     var DataRow = new Tuple<string, string, int>(DBreader.GetString(2),
                             DBreader.GetString(0), DBreader.GetInt32(1));
-                    IPList.Append(DataRow);
+
+                    if (DataRow.Item3 <= 0 || DataRow.Item3 > 65535)
+                        continue;
+
+                    IPList.Add(DataRow);
                     MachineComboBox.Items.Add(DBreader.GetString(2));
                 }
                 DBreader.Close();
@@ -104,7 +103,9 @@ namespace ZKTecoDown
 
             await scheduler.ScheduleJob(job, trigger);
         }
+        #endregion
 
+        #region TrayIcon Events
         private void Exit(object? Sender, EventArgs e)
         {
             trayIcon.Visible = false;
@@ -121,12 +122,7 @@ namespace ZKTecoDown
 
             Activate();
         }
-
-        private void Form_Load(object sender, EventArgs e)
-        {
-
-        }
-
+        
         private void MachineDL_FormClosing(object sender, FormClosingEventArgs e)
         {
             WindowState = FormWindowState.Minimized;
@@ -141,49 +137,24 @@ namespace ZKTecoDown
 
         }
 
-        public void DownloadAllMachines()
-        {
-            throw new NotImplementedException();
-        }
+        #endregion
 
-        private void DeleteUser_Click(object sender, EventArgs e)
-        {
-            if (MachConn.userInfo.Count < 1)
-                return;
-
-            var users2delete = UsersListBox.SelectedItems;
-
-            foreach (var user in users2delete)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        private async void SetTimeButton_Click(object sender, EventArgs e)
-        {
-            var time = TimePicker.Value;
-            var hour = time.Hour;
-            var minute = time.Minute;
-
-            // obtain a builder that would produce the trigger
-            TriggerBuilder tb = trigger.GetTriggerBuilder();
-            // update the schedule associated with the builder, and build the new trigger
-            var newTrigger = tb.WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(hour, minute))
-                .Build();
-
-            await scheduler.RescheduleJob(trigger.Key, newTrigger);
-            trigger = newTrigger;
-        }
-
+        #region Connection Events
         private void ConnectButton_Click(object sender, EventArgs e)
         {
+
+#if (DEBUG)
+            ShowManagmentOptions();
+#endif
+
             if (MachineComboBox.SelectedIndex == -1)
                 return;
 
             if (MachConn.isConnected())
             {
                 ConnectButton.Text = "Conectar";
-                ConnectionCheckBox.Checked = false;
+                ConnectButton.BackColor = Color.Salmon;
+                HideManagmentOptions();
                 MachConn.Disconnect();
                 return;
             }
@@ -198,29 +169,36 @@ namespace ZKTecoDown
                     MessageBoxIcon.Error);
                 return;
             }
+            else
+            {
+                ConnectButton.Text = "Desconectar";
+                ConnectButton.BackColor = Color.LightGreen;
+                ShowManagmentOptions();
+            }
 
             CurrentConnectedIndex = MachineComboBox.SelectedIndex;
             ConnectButton.Text = "Desconectar";
-            ConnectionCheckBox.Checked = true;
         }
 
-        private async void DLUsers_Click(object sender, EventArgs e)
+        private void HideManagmentOptions()
         {
-            if (!MachConn.isConnected())
-                return;
-
-            await Task.Run(() => MachConn.DownloadUsers());
-            UsersListBox.DataSource = MachConn.userInfo;
+            MDLTabControl.TabPages.Remove(MUserMangTab);
+            MDLTabControl.TabPages.Remove(MLogsMangTab);
         }
 
-        private async void DLthisMachine_Click(object sender, EventArgs e)
+        private void ShowManagmentOptions()
         {
-            if (!MachConn.isConnected())
-                return;
-            var eraseAfter = isClearAllLogs.Checked;
-            await Task.Run(() => MachConn.DownloadAttendance(eraseAfter));
-            UsersListBox.DataSource = MachConn.attendanceRecords;
-            await Task.Run(() => SaveLogs());
+            MDLTabControl.TabPages.Add(MUserMangTab);
+            MDLTabControl.TabPages.Add(MLogsMangTab);
+        }
+
+        #endregion
+
+        #region Logs Management Events
+
+        private void DownloadLogsFromAllMachines()
+        {
+            throw new NotImplementedException();
         }
 
         private async void SaveLogs()
@@ -228,7 +206,7 @@ namespace ZKTecoDown
             var connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" +
                 Config.initconf.DatabasePath + "Descargas.mdb";
             // Fichadas Alias dd-mm-yyyy_hh:mm:ss
-            string LogFilePath = Config.initconf.LogsPath + $"Fichadas {MachConn.MachineAlias} {DateTime.Now:dd-MM-yyyy_HH:mm:ss}.rei";
+            string LogFilePath = Config.initconf.LogsPath + $"Fichadas {MachConn.MachineAlias} {DateTime.Now:dd-MM-yyyy_HHmmss}.rei";
 
             using (StreamWriter LogsFile = File.CreateText(LogFilePath))
             using (OleDbConnection connection = new(connectionString))
@@ -281,16 +259,101 @@ namespace ZKTecoDown
 
             }
         }
-    }
 
-    public class DownloadJob : IJob
+        private void DLLogsAllMachines_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private async void DLLogsthisMachine_Click(object sender, EventArgs e)
+        {
+            if (!MachConn.isConnected())
+                return;
+            var eraseAfter = isClearAllLogs.Checked;
+            await Task.Run(() => MachConn.DownloadAttendance(eraseAfter));
+            UsersListBox.DataSource = MachConn.attendanceRecords;
+            await Task.Run(() => SaveLogs());
+        }
+
+        #endregion
+
+        #region User Management Events
+
+        private void DeleteUserButton_Click(object sender, EventArgs e)
+        {
+            if (MachConn.userInfo.Count < 1)
+                return;
+
+            var users2delete = UsersListBox.SelectedItems;
+
+            foreach (var user in users2delete)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        private void NewUserButton_Click(object sender, EventArgs e)
+        {
+            NewUser PopUp = new();
+            this.AddOwnedForm(PopUp);
+            DialogResult dialogresult = PopUp.ShowDialog();
+
+            if (dialogresult == DialogResult.OK)
+            {
+
+            }
+            else if (dialogresult == DialogResult.Cancel)
+            {
+
+            }
+            PopUp.Dispose();
+        }
+        
+        private async void DLUsers_Click(object sender, EventArgs e)
+        {
+            if (!MachConn.isConnected())
+                return;
+
+            await Task.Run(() => MachConn.DownloadUsers());
+            UsersListBox.DataSource = MachConn.userInfo;
+        }
+
+        #endregion
+
+        #region Config Events
+
+        private async void SetTimeButton_Click(object sender, EventArgs e)
+        {
+            var time = TimePicker.Value;
+            var hour = time.Hour;
+            var minute = time.Minute;
+
+            // obtain a builder that would produce the trigger
+            TriggerBuilder tb = trigger.GetTriggerBuilder();
+            // update the schedule associated with the builder, and build the new trigger
+            var newTrigger = tb.WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(hour, minute))
+                .Build();
+
+            await scheduler.RescheduleJob(trigger.Key, newTrigger);
+            trigger = newTrigger;
+        }
+
+        #endregion
+
+        #region Job Class
+        public class DownloadJob : IJob
     {
         public async Task Execute(IJobExecutionContext context)
         {
             JobDataMap datamap = context.MergedJobDataMap;
             MachineDL myMDL = (MachineDL)datamap["MachineDL"];
-            await Task.Run(new Action(myMDL.DownloadAllMachines));
+            await Task.Run(new Action(myMDL.DownloadLogsFromAllMachines));
             
         }
     }
+
+        #endregion
+
+    }
+
 }
