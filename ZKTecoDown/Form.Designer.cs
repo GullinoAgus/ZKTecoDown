@@ -31,10 +31,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MachineDL));
             this.MDLTabControl = new System.Windows.Forms.TabControl();
             this.MConnectionTab = new System.Windows.Forms.TabPage();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.DLLogsAllMachines = new System.Windows.Forms.Button();
             this.RelojLabel = new System.Windows.Forms.Label();
-            this.MachineComboBox = new System.Windows.Forms.ComboBox();
             this.ConnectButton = new System.Windows.Forms.Button();
+            this.MachineComboBox = new System.Windows.Forms.ComboBox();
             this.MUserMangTab = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.UsersListBox = new System.Windows.Forms.ListBox();
@@ -44,7 +45,6 @@
             this.MLogsMangTab = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.DLLogsthisMachine = new System.Windows.Forms.Button();
-            this.DLLogsAllMachines = new System.Windows.Forms.Button();
             this.LogsListBox = new System.Windows.Forms.ListBox();
             this.isClearAllLogs = new System.Windows.Forms.CheckBox();
             this.ConfigTab = new System.Windows.Forms.TabPage();
@@ -52,7 +52,7 @@
             this.MachineQuant = new System.Windows.Forms.Label();
             this.LogsDirectory = new System.Windows.Forms.Label();
             this.DBDirectory = new System.Windows.Forms.Label();
-            this.CompanyName = new System.Windows.Forms.Label();
+            this.Companyname = new System.Windows.Forms.Label();
             this.LogsDirectoryLabel = new System.Windows.Forms.Label();
             this.DBDirectoryLabel = new System.Windows.Forms.Label();
             this.CompanyNameLabel = new System.Windows.Forms.Label();
@@ -65,7 +65,7 @@
             this.DeveloperName = new System.Windows.Forms.Label();
             this.MDLTabControl.SuspendLayout();
             this.MConnectionTab.SuspendLayout();
-            this.flowLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.MUserMangTab.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.MLogsMangTab.SuspendLayout();
@@ -85,62 +85,88 @@
             this.MDLTabControl.Location = new System.Drawing.Point(0, 0);
             this.MDLTabControl.Name = "MDLTabControl";
             this.MDLTabControl.SelectedIndex = 0;
-            this.MDLTabControl.Size = new System.Drawing.Size(603, 645);
+            this.MDLTabControl.Size = new System.Drawing.Size(603, 482);
             this.MDLTabControl.TabIndex = 0;
             // 
             // MConnectionTab
             // 
-            this.MConnectionTab.Controls.Add(this.flowLayoutPanel1);
+            this.MConnectionTab.Controls.Add(this.tableLayoutPanel1);
             this.MConnectionTab.Location = new System.Drawing.Point(4, 24);
             this.MConnectionTab.Name = "MConnectionTab";
             this.MConnectionTab.Padding = new System.Windows.Forms.Padding(3);
-            this.MConnectionTab.Size = new System.Drawing.Size(595, 617);
+            this.MConnectionTab.Size = new System.Drawing.Size(595, 454);
             this.MConnectionTab.TabIndex = 0;
             this.MConnectionTab.Text = "Conexion";
             this.MConnectionTab.UseVisualStyleBackColor = true;
             // 
-            // flowLayoutPanel1
+            // tableLayoutPanel1
             // 
-            this.flowLayoutPanel1.AutoSize = true;
-            this.flowLayoutPanel1.Controls.Add(this.RelojLabel);
-            this.flowLayoutPanel1.Controls.Add(this.MachineComboBox);
-            this.flowLayoutPanel1.Controls.Add(this.ConnectButton);
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(589, 611);
-            this.flowLayoutPanel1.TabIndex = 2;
+            this.tableLayoutPanel1.ColumnCount = 3;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.Controls.Add(this.DLLogsAllMachines, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.RelojLabel, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.ConnectButton, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.MachineComboBox, 1, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(589, 448);
+            this.tableLayoutPanel1.TabIndex = 11;
+            // 
+            // DLLogsAllMachines
+            // 
+            this.DLLogsAllMachines.AutoSize = true;
+            this.DLLogsAllMachines.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tableLayoutPanel1.SetColumnSpan(this.DLLogsAllMachines, 3);
+            this.DLLogsAllMachines.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DLLogsAllMachines.Location = new System.Drawing.Point(3, 32);
+            this.DLLogsAllMachines.MaximumSize = new System.Drawing.Size(0, 30);
+            this.DLLogsAllMachines.Name = "DLLogsAllMachines";
+            this.DLLogsAllMachines.Size = new System.Drawing.Size(583, 30);
+            this.DLLogsAllMachines.TabIndex = 9;
+            this.DLLogsAllMachines.Text = "Descargar registros de todos los relojes";
+            this.DLLogsAllMachines.UseVisualStyleBackColor = true;
+            this.DLLogsAllMachines.Click += new System.EventHandler(this.DLLogsAllMachines_Click);
             // 
             // RelojLabel
             // 
             this.RelojLabel.AutoSize = true;
             this.RelojLabel.Location = new System.Drawing.Point(5, 7);
             this.RelojLabel.Margin = new System.Windows.Forms.Padding(5, 7, 3, 0);
+            this.RelojLabel.MinimumSize = new System.Drawing.Size(36, 15);
             this.RelojLabel.Name = "RelojLabel";
             this.RelojLabel.Size = new System.Drawing.Size(36, 15);
             this.RelojLabel.TabIndex = 0;
             this.RelojLabel.Text = "Reloj:";
+            // 
+            // ConnectButton
+            // 
+            this.ConnectButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ConnectButton.BackColor = System.Drawing.Color.Salmon;
+            this.ConnectButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.ConnectButton.Location = new System.Drawing.Point(253, 3);
+            this.ConnectButton.MinimumSize = new System.Drawing.Size(100, 23);
+            this.ConnectButton.Name = "ConnectButton";
+            this.ConnectButton.Size = new System.Drawing.Size(100, 23);
+            this.ConnectButton.TabIndex = 2;
+            this.ConnectButton.Text = "Conectar";
+            this.ConnectButton.UseVisualStyleBackColor = false;
+            this.ConnectButton.Click += new System.EventHandler(this.ConnectButton_Click);
             // 
             // MachineComboBox
             // 
             this.MachineComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.MachineComboBox.FormattingEnabled = true;
             this.MachineComboBox.Location = new System.Drawing.Point(47, 3);
+            this.MachineComboBox.MinimumSize = new System.Drawing.Size(200, 0);
             this.MachineComboBox.Name = "MachineComboBox";
-            this.MachineComboBox.Size = new System.Drawing.Size(121, 23);
+            this.MachineComboBox.Size = new System.Drawing.Size(200, 23);
             this.MachineComboBox.TabIndex = 1;
-            // 
-            // ConnectButton
-            // 
-            this.ConnectButton.BackColor = System.Drawing.Color.Salmon;
-            this.ConnectButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.ConnectButton.Location = new System.Drawing.Point(174, 3);
-            this.ConnectButton.Name = "ConnectButton";
-            this.ConnectButton.Size = new System.Drawing.Size(75, 23);
-            this.ConnectButton.TabIndex = 2;
-            this.ConnectButton.Text = "Conectar";
-            this.ConnectButton.UseVisualStyleBackColor = false;
-            this.ConnectButton.Click += new System.EventHandler(this.ConnectButton_Click);
             // 
             // MUserMangTab
             // 
@@ -148,7 +174,7 @@
             this.MUserMangTab.Location = new System.Drawing.Point(4, 24);
             this.MUserMangTab.Name = "MUserMangTab";
             this.MUserMangTab.Padding = new System.Windows.Forms.Padding(3);
-            this.MUserMangTab.Size = new System.Drawing.Size(595, 617);
+            this.MUserMangTab.Size = new System.Drawing.Size(595, 454);
             this.MUserMangTab.TabIndex = 2;
             this.MUserMangTab.Text = "AB de Usuarios";
             this.MUserMangTab.UseVisualStyleBackColor = true;
@@ -169,7 +195,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(589, 611);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(589, 448);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // UsersListBox
@@ -195,6 +221,7 @@
             this.DLUsers.TabIndex = 0;
             this.DLUsers.Text = "Descargar Usuarios";
             this.DLUsers.UseVisualStyleBackColor = true;
+            this.DLUsers.Click += new System.EventHandler(this.DLUsers_Click);
             // 
             // DeleteUserButton
             // 
@@ -226,7 +253,7 @@
             this.MLogsMangTab.Location = new System.Drawing.Point(4, 24);
             this.MLogsMangTab.Name = "MLogsMangTab";
             this.MLogsMangTab.Padding = new System.Windows.Forms.Padding(3);
-            this.MLogsMangTab.Size = new System.Drawing.Size(595, 617);
+            this.MLogsMangTab.Size = new System.Drawing.Size(595, 454);
             this.MLogsMangTab.TabIndex = 3;
             this.MLogsMangTab.Text = "Registros";
             this.MLogsMangTab.UseVisualStyleBackColor = true;
@@ -237,7 +264,6 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Controls.Add(this.DLLogsthisMachine, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.DLLogsAllMachines, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.LogsListBox, 1, 2);
             this.tableLayoutPanel3.Controls.Add(this.isClearAllLogs, 0, 1);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -248,34 +274,22 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(589, 611);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(589, 448);
             this.tableLayoutPanel3.TabIndex = 10;
             // 
             // DLLogsthisMachine
             // 
             this.DLLogsthisMachine.AutoSize = true;
+            this.tableLayoutPanel3.SetColumnSpan(this.DLLogsthisMachine, 2);
             this.DLLogsthisMachine.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DLLogsthisMachine.Location = new System.Drawing.Point(3, 3);
             this.DLLogsthisMachine.MaximumSize = new System.Drawing.Size(0, 30);
             this.DLLogsthisMachine.Name = "DLLogsthisMachine";
-            this.DLLogsthisMachine.Size = new System.Drawing.Size(288, 30);
+            this.DLLogsthisMachine.Size = new System.Drawing.Size(583, 30);
             this.DLLogsthisMachine.TabIndex = 7;
-            this.DLLogsthisMachine.Text = "Descargar registros de este reloj";
+            this.DLLogsthisMachine.Text = "Descargar registros del reloj ";
             this.DLLogsthisMachine.UseVisualStyleBackColor = true;
             this.DLLogsthisMachine.Click += new System.EventHandler(this.DLLogsthisMachine_Click);
-            // 
-            // DLLogsAllMachines
-            // 
-            this.DLLogsAllMachines.AutoSize = true;
-            this.DLLogsAllMachines.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DLLogsAllMachines.Location = new System.Drawing.Point(297, 3);
-            this.DLLogsAllMachines.MaximumSize = new System.Drawing.Size(0, 30);
-            this.DLLogsAllMachines.Name = "DLLogsAllMachines";
-            this.DLLogsAllMachines.Size = new System.Drawing.Size(289, 30);
-            this.DLLogsAllMachines.TabIndex = 8;
-            this.DLLogsAllMachines.Text = "Descargar registros de todos los relojes";
-            this.DLLogsAllMachines.UseVisualStyleBackColor = true;
-            this.DLLogsAllMachines.Click += new System.EventHandler(this.DLLogsAllMachines_Click);
             // 
             // LogsListBox
             // 
@@ -285,7 +299,7 @@
             this.LogsListBox.ItemHeight = 15;
             this.LogsListBox.Location = new System.Drawing.Point(3, 64);
             this.LogsListBox.Name = "LogsListBox";
-            this.LogsListBox.Size = new System.Drawing.Size(583, 544);
+            this.LogsListBox.Size = new System.Drawing.Size(583, 381);
             this.LogsListBox.TabIndex = 0;
             // 
             // isClearAllLogs
@@ -295,11 +309,11 @@
             this.isClearAllLogs.Checked = true;
             this.isClearAllLogs.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tableLayoutPanel3.SetColumnSpan(this.isClearAllLogs, 2);
-            this.isClearAllLogs.Location = new System.Drawing.Point(204, 39);
+            this.isClearAllLogs.Location = new System.Drawing.Point(208, 39);
             this.isClearAllLogs.Name = "isClearAllLogs";
-            this.isClearAllLogs.Size = new System.Drawing.Size(180, 19);
+            this.isClearAllLogs.Size = new System.Drawing.Size(172, 19);
             this.isClearAllLogs.TabIndex = 9;
-            this.isClearAllLogs.Text = "Limpiar registros al descargar";
+            this.isClearAllLogs.Text = "Borrar registros al descargar";
             this.isClearAllLogs.UseVisualStyleBackColor = true;
             // 
             // ConfigTab
@@ -308,7 +322,7 @@
             this.ConfigTab.Location = new System.Drawing.Point(4, 24);
             this.ConfigTab.Name = "ConfigTab";
             this.ConfigTab.Padding = new System.Windows.Forms.Padding(3);
-            this.ConfigTab.Size = new System.Drawing.Size(595, 617);
+            this.ConfigTab.Size = new System.Drawing.Size(595, 454);
             this.ConfigTab.TabIndex = 1;
             this.ConfigTab.Text = "Configuracion";
             this.ConfigTab.UseVisualStyleBackColor = true;
@@ -321,7 +335,7 @@
             this.LayoutConfigTab.Controls.Add(this.MachineQuant, 1, 1);
             this.LayoutConfigTab.Controls.Add(this.LogsDirectory, 1, 4);
             this.LayoutConfigTab.Controls.Add(this.DBDirectory, 1, 3);
-            this.LayoutConfigTab.Controls.Add(this.CompanyName, 1, 2);
+            this.LayoutConfigTab.Controls.Add(this.Companyname, 1, 2);
             this.LayoutConfigTab.Controls.Add(this.LogsDirectoryLabel, 0, 4);
             this.LayoutConfigTab.Controls.Add(this.DBDirectoryLabel, 0, 3);
             this.LayoutConfigTab.Controls.Add(this.CompanyNameLabel, 0, 2);
@@ -340,7 +354,7 @@
             this.LayoutConfigTab.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.LayoutConfigTab.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.LayoutConfigTab.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.LayoutConfigTab.Size = new System.Drawing.Size(589, 611);
+            this.LayoutConfigTab.Size = new System.Drawing.Size(589, 448);
             this.LayoutConfigTab.TabIndex = 0;
             // 
             // MachineQuant
@@ -375,15 +389,15 @@
             this.DBDirectory.TabIndex = 17;
             this.DBDirectory.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // CompanyName
+            // Companyname
             // 
-            this.CompanyName.AutoSize = true;
-            this.CompanyName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.CompanyName.Location = new System.Drawing.Point(297, 78);
-            this.CompanyName.Name = "CompanyName";
-            this.CompanyName.Size = new System.Drawing.Size(289, 36);
-            this.CompanyName.TabIndex = 16;
-            this.CompanyName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Companyname.AutoSize = true;
+            this.Companyname.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Companyname.Location = new System.Drawing.Point(297, 78);
+            this.Companyname.Name = "Companyname";
+            this.Companyname.Size = new System.Drawing.Size(289, 36);
+            this.Companyname.TabIndex = 16;
+            this.Companyname.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // LogsDirectoryLabel
             // 
@@ -500,7 +514,7 @@
             // 
             this.DeveloperLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.DeveloperLabel.AutoSize = true;
-            this.DeveloperLabel.Location = new System.Drawing.Point(115, 391);
+            this.DeveloperLabel.Location = new System.Drawing.Point(115, 309);
             this.DeveloperLabel.Name = "DeveloperLabel";
             this.DeveloperLabel.Size = new System.Drawing.Size(63, 15);
             this.DeveloperLabel.TabIndex = 21;
@@ -510,7 +524,7 @@
             // 
             this.DeveloperName.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.DeveloperName.AutoSize = true;
-            this.DeveloperName.Location = new System.Drawing.Point(323, 391);
+            this.DeveloperName.Location = new System.Drawing.Point(323, 309);
             this.DeveloperName.Name = "DeveloperName";
             this.DeveloperName.Size = new System.Drawing.Size(236, 15);
             this.DeveloperName.TabIndex = 22;
@@ -520,7 +534,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(603, 645);
+            this.ClientSize = new System.Drawing.Size(603, 482);
             this.Controls.Add(this.MDLTabControl);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MachineDL";
@@ -528,9 +542,8 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MachineDL_FormClosing);
             this.MDLTabControl.ResumeLayout(false);
             this.MConnectionTab.ResumeLayout(false);
-            this.MConnectionTab.PerformLayout();
-            this.flowLayoutPanel1.ResumeLayout(false);
-            this.flowLayoutPanel1.PerformLayout();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.MUserMangTab.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
@@ -555,7 +568,7 @@
         private TableLayoutPanel LayoutConfigTab;
         private Label LogsDirectory;
         private Label DBDirectory;
-        private Label CompanyName;
+        private Label Companyname;
         private Label LogsDirectoryLabel;
         private Label DBDirectoryLabel;
         private Label CompanyNameLabel;
@@ -567,7 +580,6 @@
         private TabPage MUserMangTab;
         private TabPage MLogsMangTab;
         private Button DLLogsthisMachine;
-        private Button DLLogsAllMachines;
         private CheckBox isClearAllLogs;
         private TableLayoutPanel tableLayoutPanel2;
         private Button DLUsers;
@@ -578,9 +590,10 @@
         private ListBox LogsListBox;
         private Label DeveloperLabel;
         private Label DeveloperName;
-        private FlowLayoutPanel flowLayoutPanel1;
+        private TableLayoutPanel tableLayoutPanel1;
+        private Button DLLogsAllMachines;
         private Label RelojLabel;
-        private ComboBox MachineComboBox;
         private Button ConnectButton;
+        private ComboBox MachineComboBox;
     }
 }

@@ -37,7 +37,7 @@ namespace ZKTecoDown
 
             Config.Initialize(@"./conf.ini");
             Text += " (" + Config.initconf.Company + ")";
-            CompanyName.Text = Config.initconf.Company;
+            Companyname.Text = Config.initconf.Company;
             MachineQuant.Text = Config.initconf.MachineQuant.ToString();
             DBDirectory.Text = Config.initconf.DatabasePath;
             LogsDirectory.Text = Config.initconf.LogsPath;
@@ -154,6 +154,7 @@ namespace ZKTecoDown
             {
                 ConnectButton.Text = "Conectar";
                 ConnectButton.BackColor = Color.Salmon;
+                DLLogsthisMachine.Text = "Descargar registros del reloj ";
                 HideManagmentOptions();
                 MachConn.Disconnect();
                 return;
@@ -173,11 +174,11 @@ namespace ZKTecoDown
             {
                 ConnectButton.Text = "Desconectar";
                 ConnectButton.BackColor = Color.LightGreen;
+                DLLogsthisMachine.Text += MachineComboBox.SelectedText;
                 ShowManagmentOptions();
+                CurrentConnectedIndex = MachineComboBox.SelectedIndex;
             }
 
-            CurrentConnectedIndex = MachineComboBox.SelectedIndex;
-            ConnectButton.Text = "Desconectar";
         }
 
         private void HideManagmentOptions()
@@ -188,8 +189,11 @@ namespace ZKTecoDown
 
         private void ShowManagmentOptions()
         {
-            MDLTabControl.TabPages.Add(MUserMangTab);
-            MDLTabControl.TabPages.Add(MLogsMangTab);
+            if (!MDLTabControl.TabPages.Contains(MUserMangTab))
+                MDLTabControl.TabPages.Add(MUserMangTab);
+       
+            if (!MDLTabControl.TabPages.Contains(MLogsMangTab))
+                MDLTabControl.TabPages.Add(MLogsMangTab);
         }
 
         #endregion

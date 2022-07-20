@@ -30,8 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewUser));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.AcceptButton = new System.Windows.Forms.Button();
-            this.CancelButton = new System.Windows.Forms.Button();
+            this.Acceptbutton = new System.Windows.Forms.Button();
+            this.Cancelbutton = new System.Windows.Forms.Button();
             this.NameLabel = new System.Windows.Forms.Label();
             this.NameTextBox = new System.Windows.Forms.TextBox();
             this.UserID = new System.Windows.Forms.NumericUpDown();
@@ -45,8 +45,8 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.AcceptButton, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.CancelButton, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.Acceptbutton, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.Cancelbutton, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.NameLabel, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.NameTextBox, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.UserID, 1, 1);
@@ -61,27 +61,27 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(336, 167);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // AcceptButton
+            // Acceptbutton
             // 
-            this.AcceptButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            this.AcceptButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.AcceptButton.Location = new System.Drawing.Point(46, 139);
-            this.AcceptButton.Name = "AcceptButton";
-            this.AcceptButton.Size = new System.Drawing.Size(75, 25);
-            this.AcceptButton.TabIndex = 0;
-            this.AcceptButton.Text = "Aceptar";
-            this.AcceptButton.UseVisualStyleBackColor = true;
+            this.Acceptbutton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.Acceptbutton.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.Acceptbutton.Location = new System.Drawing.Point(46, 139);
+            this.Acceptbutton.Name = "AcceptButton";
+            this.Acceptbutton.Size = new System.Drawing.Size(75, 25);
+            this.Acceptbutton.TabIndex = 0;
+            this.Acceptbutton.Text = "Aceptar";
+            this.Acceptbutton.UseVisualStyleBackColor = true;
             // 
-            // CancelButton
+            // Cancelbutton
             // 
-            this.CancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            this.CancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.CancelButton.Location = new System.Drawing.Point(214, 139);
-            this.CancelButton.Name = "CancelButton";
-            this.CancelButton.Size = new System.Drawing.Size(75, 25);
-            this.CancelButton.TabIndex = 1;
-            this.CancelButton.Text = "Cancelar";
-            this.CancelButton.UseVisualStyleBackColor = true;
+            this.Cancelbutton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.Cancelbutton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.Cancelbutton.Location = new System.Drawing.Point(214, 139);
+            this.Cancelbutton.Name = "Cancelbutton";
+            this.Cancelbutton.Size = new System.Drawing.Size(75, 25);
+            this.Cancelbutton.TabIndex = 1;
+            this.Cancelbutton.Text = "Cancelar";
+            this.Cancelbutton.UseVisualStyleBackColor = true;
             // 
             // NameLabel
             // 
@@ -145,8 +145,8 @@
         #endregion
 
         private TableLayoutPanel tableLayoutPanel1;
-        private Button AcceptButton;
-        private Button CancelButton;
+        private Button Acceptbutton;
+        private Button Cancelbutton;
         private Label NameLabel;
         private TextBox NameTextBox;
         private NumericUpDown UserID;
