@@ -17,49 +17,62 @@ namespace ZKTecoDown
         private int CurrentConnectedIndex = -1;
         public MachineDL()
         {
-            try
+            InitializeComponent();
+
+            Icon = new Icon(@"./icon.ico");
+
+            exitMenuItem.Click += new EventHandler(Exit);
+
+            contextMenu.Items.Add(exitMenuItem);
+
+            trayIcon.Text = "Descargador de relojes";
+            trayIcon.ContextMenuStrip = contextMenu;
+            trayIcon.DoubleClick += new EventHandler(DoubleClickTrayIcon);
+            trayIcon.Icon = Icon;
+            trayIcon.Visible = true;
+
+            if (!Config.Initialize(@"./conf.ini"))
             {
-
-                InitializeComponent();
-
-                Icon = new Icon(@"./icon.ico");
-
-                exitMenuItem.Click += new EventHandler(Exit);
-
-                contextMenu.Items.Add(exitMenuItem);
-
-                trayIcon.Text = "Descargador de relojes";
-                trayIcon.ContextMenuStrip = contextMenu;
-                trayIcon.DoubleClick += new EventHandler(DoubleClickTrayIcon);
-                trayIcon.Icon = Icon;
-                trayIcon.Visible = true;
-
-                Config.Initialize(@"./conf.ini");
-                Text += " (" + Config.initconf.Company + ")";
-                Companyname.Text = Config.initconf.Company;
-                MachineQuant.Text = Config.initconf.MachineQuant.ToString();
-                DBDirectory.Text = Config.initconf.DatabasePath;
-                LogsDirectory.Text = Config.initconf.LogsPath;
-                TimePicker.Value = new DateTime(2000, 01, 01, Config.initconf.DLTime[0], Config.initconf.DLTime[1], 0);
-
-                if (!File.Exists(Config.initconf.DatabasePath + "Descargas.mdb"))
-                {
-                    CreateDB();
-                }
-
-                GetIpList();
-
-                BuildScheduleJob();
-
-                HideManagmentOptions();
+                trayIcon.Visible = false;
+                Close();
+                return;
             }
-            catch (Exception e)
+
+            Text += " (" + Config.initconf.Company + ")";
+            Companyname.Text = Config.initconf.Company;
+            MachineQuant.Text = Config.initconf.MachineQuant.ToString();
+            DBDirectory.Text = Config.initconf.DatabasePath;
+            LogsDirectory.Text = Config.initconf.LogsPath;
+            TimePicker.Value = new DateTime(2000, 01, 01, Config.initconf.DLTime[0], Config.initconf.DLTime[1], 0);
+
+            if (!File.Exists(Config.initconf.DatabasePath + "Descargas.mdb"))
             {
-                MessageBox.Show($"Error: \n" + e.ToString(),
+                try
+                {
+                    if (!CreateDB())
+                    {
+                        throw new FileLoadException();
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show($"Error al crear la base de datos.\n" +
+                    $"Contacte con un tecnico.",
                     "Error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
+
+                    trayIcon.Visible = false;
+                    Close();
+                    return;
+                }
             }
+
+            GetIpList();
+
+            BuildScheduleJob();
+
+            HideManagmentOptions();
         }
 
         #region Initialization

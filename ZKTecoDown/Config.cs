@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -66,7 +65,6 @@ namespace ZKTecoDown
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Exception at Config.Initialize" + ex.ToString());
                 MessageBox.Show("Error en inicializacion. Revise la configuracion del programa.",
                     "Error",
                     MessageBoxButtons.OK,

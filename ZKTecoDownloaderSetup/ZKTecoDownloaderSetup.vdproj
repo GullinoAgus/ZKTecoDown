@@ -45,12 +45,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_7069F81BD663444E9541BFD56068E0E2"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_91F638D31EEB4CBBB26BE2B9BEF1F751"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -640,7 +634,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:ZKTecoDownloader"
         "ProductCode" = "8:{8E2C60B8-3D5D-4FA1-8BB7-8B4E03785BCB}"
-        "PackageCode" = "8:{C5556746-FB02-4590-B104-2D27178D13E4}"
+        "PackageCode" = "8:{5E6FB8F4-CF6B-499D-9EAC-1942B7B22B65}"
         "UpgradeCode" = "8:{079374AC-7B59-4ADD-854C-8654A41580D7}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
@@ -760,7 +754,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_13E71331D4D54FF199724C48A0AA0F47"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_6E1B13B12EFE450BB3BC891B58BEA7B6"
             {
             "Name" = "8:Descargador de Relojes"
             "Arguments" = "8:"
@@ -768,22 +762,22 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_7069F81BD663444E9541BFD56068E0E2"
-            "Folder" = "8:_158E5F74759347D8AC334555909B0644"
+            "Target" = "8:_A655432F42CA4B10873E5F7C30438D4B"
+            "Folder" = "8:_0A7CC611CE884EF1932A69AF98B2597D"
             "WorkingFolder" = "8:_0D048C69073E43BC90EBE2EA2EDF27D9"
             "Icon" = "8:_A2539525E75D4280ABAD6AA920BA1205"
             "Feature" = "8:"
             }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_492BCCB4C80245ADBB3999BEF0C0A58D"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_7812D3320BA742438D4EDEB4E6F2AD43"
             {
-            "Name" = "8:Descargador de Relojes"
+            "Name" = "8:Descargado de Relojes"
             "Arguments" = "8:"
             "Description" = "8:"
-            "ShowCmd" = "3:7"
+            "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_7069F81BD663444E9541BFD56068E0E2"
-            "Folder" = "8:_0A7CC611CE884EF1932A69AF98B2597D"
+            "Target" = "8:_A655432F42CA4B10873E5F7C30438D4B"
+            "Folder" = "8:_158E5F74759347D8AC334555909B0644"
             "WorkingFolder" = "8:_0D048C69073E43BC90EBE2EA2EDF27D9"
             "Icon" = "8:_A2539525E75D4280ABAD6AA920BA1205"
             "Feature" = "8:"
@@ -1187,9 +1181,9 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_7069F81BD663444E9541BFD56068E0E2"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_A655432F42CA4B10873E5F7C30438D4B"
             {
-            "SourcePath" = "8:..\\ZKTecoDown\\obj\\Debug\\net6.0-windows\\apphost.exe"
+            "SourcePath" = "8:..\\ZKTecoDown\\obj\\Release\\net6.0-windows\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_0D048C69073E43BC90EBE2EA2EDF27D9"
