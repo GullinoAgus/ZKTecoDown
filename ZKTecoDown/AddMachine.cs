@@ -14,6 +14,9 @@
         {
             var templistitem = new ListViewItem(new string[] { NameTextBox.Text, IPTextBox.Text, PortNumericBox.Value.ToString() });
             IPAddressListview.Items.Add(templistitem);
+            NameTextBox.Clear();
+            IPTextBox.Clear();
+            PortNumericBox.Value = 0;
         }
 
         private void DeleteButton_Click(object sender, EventArgs e)

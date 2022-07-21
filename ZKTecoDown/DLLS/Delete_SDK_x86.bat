@@ -1,6 +1,6 @@
 cd /d %~dp0
 if /i "%PROCESSOR_IDENTIFIER:~0,3%"=="X86" (
-	echo system is x86, new sdk is x64 
+	echo system is x86, new sdk is x86 
 	del %windir%\System32\commpro.dll
 	del %windir%\System32\comms.dll
 	del %windir%\System32\rscagent.dll
@@ -17,7 +17,7 @@ if /i "%PROCESSOR_IDENTIFIER:~0,3%"=="X86" (
 	del %windir%\System32\pltcpcomm.dll
 	regsvr32 %windir%\System32\zkemkeeper.dll -u
 	) else (
-		echo system is x64, new sdk is x64, delete all
+		echo system is x64, new sdk is x86, delete all
 		del %windir%\System32\commpro.dll
 		del %windir%\System32\comms.dll
 		del %windir%\System32\rscagent.dll
@@ -49,3 +49,4 @@ if /i "%PROCESSOR_IDENTIFIER:~0,3%"=="X86" (
 		del %windir%\SysWOW64\pltcpcomm.dll
 		regsvr32 %windir%\SysWOW64\zkemkeeper.dll -u
 	)
+pause

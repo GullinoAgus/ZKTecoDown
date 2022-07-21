@@ -57,7 +57,8 @@ namespace ZKTecoDown
                 catch (Exception e)
                 {
                     MessageBox.Show($"Error al crear la base de datos.\n" +
-                    $"Contacte con un tecnico.",
+                    $"Contacte con un tecnico.\n" +
+                    e.ToString(),
                     "Error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
@@ -78,7 +79,7 @@ namespace ZKTecoDown
         #region Initialization
         private void GetIpList()
         {
-            var connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" +
+            var connectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" +
                 Config.initconf.DatabasePath + "Descargas.mdb; Jet OLEDB:Database Password=u9120bkb;";
 
             using (OleDbConnection connection = new OleDbConnection(connectionString))
@@ -131,7 +132,7 @@ namespace ZKTecoDown
 
         private bool CreateDB()
         {
-            var connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" +
+            var connectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" +
                 Config.initconf.DatabasePath + "Descargas.mdb; Jet OLEDB:Database Password=u9120bkb;";
 
             var nodesTable = new ADOX.Table();
@@ -303,7 +304,7 @@ namespace ZKTecoDown
 
         private void SaveLogs()
         {
-            var connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" +
+            var connectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" +
                 Config.initconf.DatabasePath + "Descargas.mdb; Jet OLEDB:Database Password=u9120bkb;";
             // Fichadas Alias dd-mm-yyyy_hh:mm:ss
             string LogFilePath = Config.initconf.LogsPath + $"Fichadas {MachConn.MachineAlias} {DateTime.Now:dd-MM-yyyy_HHmmss}.rei";
