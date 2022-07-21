@@ -269,7 +269,7 @@
             this.MinimizeBox = false;
             this.Name = "AddMachine";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "AddMachine";
+            this.Text = "Añadir Relojes";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);

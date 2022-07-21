@@ -49,4 +49,3 @@ if /i "%PROCESSOR_IDENTIFIER:~0,3%"=="X86" (
 		del %windir%\SysWOW64\pltcpcomm.dll
 		regsvr32 %windir%\SysWOW64\zkemkeeper.dll -u
 	)
-pause

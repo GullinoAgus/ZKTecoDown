@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
-using System.Security.Cryptography;
 using System.Diagnostics;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace ZKTecoDown
@@ -25,7 +25,7 @@ namespace ZKTecoDown
 
     internal class Config
     {
-        
+
         public static InitData initconf { get; private set; }
         private Config()
         {
@@ -37,16 +37,16 @@ namespace ZKTecoDown
             try
             {
                 using (FileStream iniFile = new(path2ini, FileMode.Open, FileAccess.Read))
-                { 
-                    byte[] data = new byte[iniFile.Length-16];
+                {
+                    byte[] data = new byte[iniFile.Length - 16];
                     byte[] nonce = new byte[16];
 
                     iniFile.Seek(0, SeekOrigin.Begin);
                     iniFile.Read(nonce, 0, 16);
                     iniFile.Read(data, 0, data.Length);
-                    
+
                     byte[] key = ASCIIEncoding.ASCII.GetBytes("u9120bkb");
-                   
+
                     var hasher = MD5.Create();
                     var HashedKey = hasher.ComputeHash(key);
                     var dataString = DecryptStringFromBytes_Aes(data, HashedKey, nonce);
@@ -65,21 +65,21 @@ namespace ZKTecoDown
                 }
             }
             catch (Exception ex)
-            { 
+            {
                 Debug.WriteLine("Exception at Config.Initialize" + ex.ToString());
-                MessageBox.Show("Error en inicializacion. Revise la configuracion del programa.", 
-                    "Error", 
-                    MessageBoxButtons.OK, 
+                MessageBox.Show("Error en inicializacion. Revise la configuracion del programa.",
+                    "Error",
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
                 return false;
             }
-            
+
             return true;
         }
 
         private static string DecryptStringFromBytes_Aes(byte[] cipherText, byte[] Key, byte[] IV)
         {
-            
+
             string plaintext;
 
             using (var aes = Aes.Create())
@@ -89,7 +89,7 @@ namespace ZKTecoDown
                 aes.Mode = CipherMode.CFB;
                 aes.IV = IV;
                 aes.Padding = PaddingMode.None;
-                
+
                 ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
                 using (var msDecrypt = new MemoryStream(cipherText))
                 using (var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))

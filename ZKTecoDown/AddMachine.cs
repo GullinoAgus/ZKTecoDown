@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace ZKTecoDown
+﻿namespace ZKTecoDown
 {
     public partial class AddMachine : Form
     {
@@ -22,7 +12,7 @@ namespace ZKTecoDown
 
         private void AddButton_Click(object sender, EventArgs e)
         {
-            var templistitem = new ListViewItem(new string[] {NameTextBox.Text, IPTextBox.Text, PortNumericBox.Value.ToString()});
+            var templistitem = new ListViewItem(new string[] { NameTextBox.Text, IPTextBox.Text, PortNumericBox.Value.ToString() });
             IPAddressListview.Items.Add(templistitem);
         }
 

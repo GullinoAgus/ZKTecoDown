@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using zkemkeeper;
-using System.Diagnostics;
-
-namespace ZKTecoDown
+﻿namespace ZKTecoDown
 {
 
-    internal struct User {
+    internal struct User
+    {
         public string Name;
         public string Password;
         public string ID;
@@ -18,7 +11,7 @@ namespace ZKTecoDown
 
         public string[] ToStringArray()
         {
-            return new string[]  {ID, Name, Privilege.ToString()};
+            return new string[] { ID, Name, Privilege.ToString() };
         }
     }
     /* InOutModes
@@ -85,7 +78,7 @@ namespace ZKTecoDown
 
         public MachineConnection()
         {
-            MachineAlias = new("Default")
+            MachineAlias = new("Default");
         }
 
         ~MachineConnection()
@@ -136,7 +129,7 @@ namespace ZKTecoDown
                                                    out tmpusr.Password,
                                                    out tmpusr.Privilege,
                                                    out tmpusr.Enabled);
-                
+
                 if (reading)
                     userInfo.Add(tmpusr);
             }
@@ -147,7 +140,7 @@ namespace ZKTecoDown
         {
 
             attendanceRecords.Clear();
-            
+
             if (!Machine.ReadGeneralLogData(0))
             {
                 Machine.GetLastError(ref LastErrorCode);
@@ -171,7 +164,7 @@ namespace ZKTecoDown
                                                    ref tmpattrec.WorkCode);
                 if (reading)
                     attendanceRecords.Add(tmpattrec);
-                
+
 
             } while (reading);
             if (eraseAfterward)
@@ -182,7 +175,7 @@ namespace ZKTecoDown
                     return false;
                 }
             }
-                    
+
             return true;
         }
 

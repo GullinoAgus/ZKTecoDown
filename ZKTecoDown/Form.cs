@@ -1,8 +1,5 @@
 using Quartz;
 using System.Data.OleDb;
-using System.Diagnostics;
-using ADOX;
-using ADODB;
 
 namespace ZKTecoDown
 {
@@ -20,43 +17,51 @@ namespace ZKTecoDown
         private int CurrentConnectedIndex = -1;
         public MachineDL()
         {
-
-            InitializeComponent();
-
-            Debug.WriteLine("Starting app...");
-
-            Icon = new Icon(@"./icon.ico");
-
-            exitMenuItem.Click += new EventHandler(Exit);
-
-            contextMenu.Items.Add(exitMenuItem);
-
-            trayIcon.Text = "Descargador de relojes";
-            trayIcon.ContextMenuStrip = contextMenu;
-            trayIcon.DoubleClick += new EventHandler(DoubleClickTrayIcon);
-            trayIcon.Icon = Icon;
-            trayIcon.Visible = true;
-
-            Config.Initialize(@"./conf.ini");
-            Text += " (" + Config.initconf.Company + ")";
-            Companyname.Text = Config.initconf.Company;
-            MachineQuant.Text = Config.initconf.MachineQuant.ToString();
-            DBDirectory.Text = Config.initconf.DatabasePath;
-            LogsDirectory.Text = Config.initconf.LogsPath;
-            TimePicker.Value = new DateTime(2000, 01, 01, Config.initconf.DLTime[0], Config.initconf.DLTime[1], 0);
-
-            if (!File.Exists(Config.initconf.DatabasePath + "Descargas.mdb"))
+            try
             {
-                CreateDB();
+
+                InitializeComponent();
+
+                Icon = new Icon(@"./icon.ico");
+
+                exitMenuItem.Click += new EventHandler(Exit);
+
+                contextMenu.Items.Add(exitMenuItem);
+
+                trayIcon.Text = "Descargador de relojes";
+                trayIcon.ContextMenuStrip = contextMenu;
+                trayIcon.DoubleClick += new EventHandler(DoubleClickTrayIcon);
+                trayIcon.Icon = Icon;
+                trayIcon.Visible = true;
+
+                Config.Initialize(@"./conf.ini");
+                Text += " (" + Config.initconf.Company + ")";
+                Companyname.Text = Config.initconf.Company;
+                MachineQuant.Text = Config.initconf.MachineQuant.ToString();
+                DBDirectory.Text = Config.initconf.DatabasePath;
+                LogsDirectory.Text = Config.initconf.LogsPath;
+                TimePicker.Value = new DateTime(2000, 01, 01, Config.initconf.DLTime[0], Config.initconf.DLTime[1], 0);
+
+                if (!File.Exists(Config.initconf.DatabasePath + "Descargas.mdb"))
+                {
+                    CreateDB();
+                }
+
+                GetIpList();
+
+                BuildScheduleJob();
+
+                HideManagmentOptions();
             }
-
-            GetIpList();
-
-            BuildScheduleJob();
-
-            HideManagmentOptions(); 
+            catch (Exception e)
+            {
+                MessageBox.Show($"Error: \n" + e.ToString(),
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
-        
+
         #region Initialization
         private void GetIpList()
         {
@@ -68,8 +73,8 @@ namespace ZKTecoDown
                 OleDbCommand command = new OleDbCommand("SELECT Ip, Puerto, Ubicacion FROM Nodos", connection);
                 connection.Open();
 
-                OleDbDataReader DBreader = command.ExecuteReader(); 
-                
+                OleDbDataReader DBreader = command.ExecuteReader();
+
                 for (int i = 0; i < Config.initconf.MachineQuant && DBreader.Read(); i++)
                 {
                     var DataRow = new Tuple<string, string, int>(DBreader.GetString(2),
@@ -184,7 +189,7 @@ namespace ZKTecoDown
 
             Activate();
         }
-        
+
         private void MachineDL_FormClosing(object sender, FormClosingEventArgs e)
         {
             WindowState = FormWindowState.Minimized;
@@ -225,8 +230,8 @@ namespace ZKTecoDown
             var selectedMachine = IPList[MachineComboBox.SelectedIndex];
             if (!MachConn.Connect(selectedMachine.Item1, selectedMachine.Item2, selectedMachine.Item3))
             {
-                Debug.WriteLine("Error al conectar con el dispositivo");
-                MessageBox.Show($"Error al conectar con {selectedMachine.Item1}. Verificar que el dispositivo se encuentre conectado a la red.",
+                MessageBox.Show($"Error al conectar con {selectedMachine.Item1}.\n" +
+                    $" Verificar que el dispositivo se encuentre conectado a la red o que la configuracion sea correcta.",
                     "Error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
@@ -253,7 +258,7 @@ namespace ZKTecoDown
         {
             if (!MDLTabControl.TabPages.Contains(MUserMangTab))
                 MDLTabControl.TabPages.Add(MUserMangTab);
-       
+
             if (!MDLTabControl.TabPages.Contains(MLogsMangTab))
                 MDLTabControl.TabPages.Add(MLogsMangTab);
         }
@@ -268,7 +273,6 @@ namespace ZKTecoDown
             {
                 if (!MachConn.Connect(ip.Item1, ip.Item2, ip.Item3))
                 {
-                    Debug.WriteLine("Error al conectar con el dispositivo");
                     Task.Run(() => MessageBox.Show($"Error al conectar con {ip.Item1}. Verificar que el dispositivo se encuentre conectado a la red.",
                         "Error",
                         MessageBoxButtons.OK,
@@ -408,7 +412,7 @@ namespace ZKTecoDown
             }
             PopUp.Dispose();
         }
-        
+
         private async void DLUsers_Click(object sender, EventArgs e)
         {
             if (!MachConn.isConnected())
@@ -452,15 +456,15 @@ namespace ZKTecoDown
 
         #region Job Class
         public class DownloadJob : IJob
-    {
-        public async Task Execute(IJobExecutionContext context)
         {
-            JobDataMap datamap = context.MergedJobDataMap;
-            MachineDL myMDL = (MachineDL)datamap["MachineDL"];
-            await Task.Run(new Action(myMDL.DownloadLogsFromAllMachines));
-            
+            public async Task Execute(IJobExecutionContext context)
+            {
+                JobDataMap datamap = context.MergedJobDataMap;
+                MachineDL myMDL = (MachineDL)datamap["MachineDL"];
+                await Task.Run(new Action(myMDL.DownloadLogsFromAllMachines));
+
+            }
         }
-    }
 
         #endregion
 
