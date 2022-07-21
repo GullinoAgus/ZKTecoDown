@@ -38,15 +38,21 @@
             this.MachineComboBox = new System.Windows.Forms.ComboBox();
             this.MUserMangTab = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.UsersListBox = new System.Windows.Forms.ListBox();
             this.DLUsers = new System.Windows.Forms.Button();
             this.DeleteUserButton = new System.Windows.Forms.Button();
             this.NewUserButton = new System.Windows.Forms.Button();
+            this.UsersListview = new System.Windows.Forms.ListView();
+            this.IDHeader = new System.Windows.Forms.ColumnHeader();
+            this.NameHeader = new System.Windows.Forms.ColumnHeader();
+            this.PrivilegeHeader = new System.Windows.Forms.ColumnHeader();
             this.MLogsMangTab = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.DLLogsthisMachine = new System.Windows.Forms.Button();
-            this.LogsListBox = new System.Windows.Forms.ListBox();
             this.isClearAllLogs = new System.Windows.Forms.CheckBox();
+            this.LogsListview = new System.Windows.Forms.ListView();
+            this.IDLogsHeader = new System.Windows.Forms.ColumnHeader();
+            this.InOutHeader = new System.Windows.Forms.ColumnHeader();
+            this.DateLogHeader = new System.Windows.Forms.ColumnHeader();
             this.ConfigTab = new System.Windows.Forms.TabPage();
             this.LayoutConfigTab = new System.Windows.Forms.TableLayoutPanel();
             this.MachineQuant = new System.Windows.Forms.Label();
@@ -184,10 +190,10 @@
             this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Controls.Add(this.UsersListBox, 0, 2);
             this.tableLayoutPanel2.Controls.Add(this.DLUsers, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.DeleteUserButton, 1, 1);
             this.tableLayoutPanel2.Controls.Add(this.NewUserButton, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.UsersListview, 0, 2);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -197,17 +203,6 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.Size = new System.Drawing.Size(589, 448);
             this.tableLayoutPanel2.TabIndex = 1;
-            // 
-            // UsersListBox
-            // 
-            this.tableLayoutPanel2.SetColumnSpan(this.UsersListBox, 2);
-            this.UsersListBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.UsersListBox.FormattingEnabled = true;
-            this.UsersListBox.ItemHeight = 15;
-            this.UsersListBox.Location = new System.Drawing.Point(3, 75);
-            this.UsersListBox.Name = "UsersListBox";
-            this.UsersListBox.Size = new System.Drawing.Size(583, 533);
-            this.UsersListBox.TabIndex = 4;
             // 
             // DLUsers
             // 
@@ -247,6 +242,41 @@
             this.NewUserButton.UseVisualStyleBackColor = true;
             this.NewUserButton.Click += new System.EventHandler(this.NewUserButton_Click);
             // 
+            // UsersListview
+            // 
+            this.UsersListview.AllowColumnReorder = true;
+            this.UsersListview.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.IDHeader,
+            this.NameHeader,
+            this.PrivilegeHeader});
+            this.tableLayoutPanel2.SetColumnSpan(this.UsersListview, 2);
+            this.UsersListview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UsersListview.FullRowSelect = true;
+            this.UsersListview.GridLines = true;
+            this.UsersListview.Location = new System.Drawing.Point(3, 75);
+            this.UsersListview.Name = "UsersListview";
+            this.UsersListview.Size = new System.Drawing.Size(583, 370);
+            this.UsersListview.TabIndex = 4;
+            this.UsersListview.UseCompatibleStateImageBehavior = false;
+            this.UsersListview.View = System.Windows.Forms.View.Details;
+            this.UsersListview.SizeChanged += new System.EventHandler(this.UsersListview_SizeChanged);
+            // 
+            // IDHeader
+            // 
+            this.IDHeader.Text = "ID";
+            this.IDHeader.Width = 145;
+            // 
+            // NameHeader
+            // 
+            this.NameHeader.Text = "Nombre";
+            this.NameHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.NameHeader.Width = 291;
+            // 
+            // PrivilegeHeader
+            // 
+            this.PrivilegeHeader.Text = "Privilegios";
+            this.PrivilegeHeader.Width = 145;
+            // 
             // MLogsMangTab
             // 
             this.MLogsMangTab.Controls.Add(this.tableLayoutPanel3);
@@ -264,16 +294,15 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Controls.Add(this.DLLogsthisMachine, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.LogsListBox, 1, 2);
             this.tableLayoutPanel3.Controls.Add(this.isClearAllLogs, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.LogsListview, 0, 2);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 2;
+            this.tableLayoutPanel3.RowCount = 3;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(589, 448);
             this.tableLayoutPanel3.TabIndex = 10;
             // 
@@ -291,17 +320,6 @@
             this.DLLogsthisMachine.UseVisualStyleBackColor = true;
             this.DLLogsthisMachine.Click += new System.EventHandler(this.DLLogsthisMachine_Click);
             // 
-            // LogsListBox
-            // 
-            this.tableLayoutPanel3.SetColumnSpan(this.LogsListBox, 2);
-            this.LogsListBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LogsListBox.FormattingEnabled = true;
-            this.LogsListBox.ItemHeight = 15;
-            this.LogsListBox.Location = new System.Drawing.Point(3, 64);
-            this.LogsListBox.Name = "LogsListBox";
-            this.LogsListBox.Size = new System.Drawing.Size(583, 381);
-            this.LogsListBox.TabIndex = 0;
-            // 
             // isClearAllLogs
             // 
             this.isClearAllLogs.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -315,6 +333,42 @@
             this.isClearAllLogs.TabIndex = 9;
             this.isClearAllLogs.Text = "Borrar registros al descargar";
             this.isClearAllLogs.UseVisualStyleBackColor = true;
+            // 
+            // LogsListview
+            // 
+            this.LogsListview.AllowColumnReorder = true;
+            this.LogsListview.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.IDLogsHeader,
+            this.InOutHeader,
+            this.DateLogHeader});
+            this.tableLayoutPanel3.SetColumnSpan(this.LogsListview, 2);
+            this.LogsListview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LogsListview.FullRowSelect = true;
+            this.LogsListview.GridLines = true;
+            this.LogsListview.Location = new System.Drawing.Point(3, 64);
+            this.LogsListview.Name = "LogsListview";
+            this.LogsListview.Size = new System.Drawing.Size(583, 381);
+            this.LogsListview.TabIndex = 10;
+            this.LogsListview.UseCompatibleStateImageBehavior = false;
+            this.LogsListview.View = System.Windows.Forms.View.Details;
+            this.LogsListview.SizeChanged += new System.EventHandler(this.LogsListview_SizeChanged);
+            // 
+            // IDLogsHeader
+            // 
+            this.IDLogsHeader.Text = "ID";
+            this.IDLogsHeader.Width = 145;
+            // 
+            // InOutHeader
+            // 
+            this.InOutHeader.Text = "Entrada/Salida";
+            this.InOutHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.InOutHeader.Width = 291;
+            // 
+            // DateLogHeader
+            // 
+            this.DateLogHeader.Text = "Fecha y hora";
+            this.DateLogHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.DateLogHeader.Width = 145;
             // 
             // ConfigTab
             // 
@@ -585,9 +639,7 @@
         private Button DLUsers;
         private Button DeleteUserButton;
         private Button NewUserButton;
-        private ListBox UsersListBox;
         private TableLayoutPanel tableLayoutPanel3;
-        private ListBox LogsListBox;
         private Label DeveloperLabel;
         private Label DeveloperName;
         private TableLayoutPanel tableLayoutPanel1;
@@ -595,5 +647,13 @@
         private Label RelojLabel;
         private Button ConnectButton;
         private ComboBox MachineComboBox;
+        private ListView UsersListview;
+        private ListView LogsListview;
+        private ColumnHeader IDHeader;
+        private ColumnHeader NameHeader;
+        private ColumnHeader PrivilegeHeader;
+        private ColumnHeader IDLogsHeader;
+        private ColumnHeader InOutHeader;
+        private ColumnHeader DateLogHeader;
     }
 }

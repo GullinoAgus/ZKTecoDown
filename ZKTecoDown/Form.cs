@@ -1,6 +1,8 @@
 using Quartz;
 using System.Data.OleDb;
 using System.Diagnostics;
+using ADOX;
+using ADODB;
 
 namespace ZKTecoDown
 {
@@ -43,18 +45,23 @@ namespace ZKTecoDown
             LogsDirectory.Text = Config.initconf.LogsPath;
             TimePicker.Value = new DateTime(2000, 01, 01, Config.initconf.DLTime[0], Config.initconf.DLTime[1], 0);
 
+            if (!File.Exists(Config.initconf.DatabasePath + "Descargas.mdb"))
+            {
+                CreateDB();
+            }
+
             GetIpList();
 
             BuildScheduleJob();
 
-            HideManagmentOptions();
+            HideManagmentOptions(); 
         }
         
         #region Initialization
         private void GetIpList()
         {
             var connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" +
-                Config.initconf.DatabasePath + "Descargas.mdb";
+                Config.initconf.DatabasePath + "Descargas.mdb; Jet OLEDB:Database Password=u9120bkb;";
 
             using (OleDbConnection connection = new OleDbConnection(connectionString))
             {
@@ -103,6 +110,61 @@ namespace ZKTecoDown
 
             await scheduler.ScheduleJob(job, trigger);
         }
+
+        private bool CreateDB()
+        {
+            var connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" +
+                Config.initconf.DatabasePath + "Descargas.mdb; Jet OLEDB:Database Password=u9120bkb;";
+
+            var nodesTable = new ADOX.Table();
+            var LogsTable = new ADOX.Table();
+            nodesTable.Name = "Nodos";
+            nodesTable.Columns.Append("IP");
+            nodesTable.Columns.Append("Puerto", ADOX.DataTypeEnum.adInteger);
+            nodesTable.Columns.Append("Ubicacion");
+            LogsTable.Name = "Registros";
+            LogsTable.Columns.Append("Codigo");
+            LogsTable.Columns.Append("Fecha");
+            LogsTable.Columns.Append("Hora");
+            LogsTable.Columns.Append("Tipo");
+            LogsTable.Columns.Append("Nodo");
+            LogsTable.Columns.Append("FechaDescarga");
+            LogsTable.Columns.Append("HoraDescarga");
+
+            var PopUp = new AddMachine();
+            var result = PopUp.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+
+            }
+            else
+            {
+                PopUp.Dispose();
+                return false;
+            }
+
+            var cat = new ADOX.Catalog();
+            cat.Create(connectionString);
+            cat.Tables.Append(LogsTable);
+            cat.Tables.Append(nodesTable);
+
+            ADODB.Connection con = cat.ActiveConnection as ADODB.Connection;
+
+            foreach (ListViewItem item in PopUp.IPAddressListview.Items)
+            {
+                object output;
+                string commandText = $"INSERT INTO Nodos(IP, Puerto, Ubicacion) Values(" +
+                    $"'{item.SubItems[1].Text}', '{item.SubItems[2].Text}', '{item.SubItems[0].Text}')";
+                con.Execute(commandText, out output);
+            }
+
+            if (con != null)
+                con.Close();
+            PopUp.Dispose();
+            return true;
+        }
+
         #endregion
 
         #region TrayIcon Events
@@ -163,8 +225,8 @@ namespace ZKTecoDown
             var selectedMachine = IPList[MachineComboBox.SelectedIndex];
             if (!MachConn.Connect(selectedMachine.Item1, selectedMachine.Item2, selectedMachine.Item3))
             {
-                Debug.WriteLine("Error connecting to device");
-                MessageBox.Show("Error al conectar. Verificar que el dispositivo se encuentre conectado a la red.",
+                Debug.WriteLine("Error al conectar con el dispositivo");
+                MessageBox.Show($"Error al conectar con {selectedMachine.Item1}. Verificar que el dispositivo se encuentre conectado a la red.",
                     "Error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
@@ -174,7 +236,7 @@ namespace ZKTecoDown
             {
                 ConnectButton.Text = "Desconectar";
                 ConnectButton.BackColor = Color.LightGreen;
-                DLLogsthisMachine.Text += MachineComboBox.SelectedText;
+                DLLogsthisMachine.Text += MachineComboBox.SelectedItem.ToString();
                 ShowManagmentOptions();
                 CurrentConnectedIndex = MachineComboBox.SelectedIndex;
             }
@@ -202,13 +264,30 @@ namespace ZKTecoDown
 
         private void DownloadLogsFromAllMachines()
         {
-            throw new NotImplementedException();
+            foreach (var ip in IPList)
+            {
+                if (!MachConn.Connect(ip.Item1, ip.Item2, ip.Item3))
+                {
+                    Debug.WriteLine("Error al conectar con el dispositivo");
+                    Task.Run(() => MessageBox.Show($"Error al conectar con {ip.Item1}. Verificar que el dispositivo se encuentre conectado a la red.",
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error));
+                    return;
+                }
+                else
+                {
+                    MachConn.DownloadAttendance(true);
+                    SaveLogs();
+                    MachConn.Disconnect();
+                }
+            }
         }
 
-        private async void SaveLogs()
+        private void SaveLogs()
         {
             var connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" +
-                Config.initconf.DatabasePath + "Descargas.mdb";
+                Config.initconf.DatabasePath + "Descargas.mdb; Jet OLEDB:Database Password=u9120bkb;";
             // Fichadas Alias dd-mm-yyyy_hh:mm:ss
             string LogFilePath = Config.initconf.LogsPath + $"Fichadas {MachConn.MachineAlias} {DateTime.Now:dd-MM-yyyy_HHmmss}.rei";
 
@@ -249,34 +328,44 @@ namespace ZKTecoDown
                     }
 
                     command.CommandText = $"INSERT INTO Registros(Codigo, Fecha, Hora, Tipo, Nodo, FechaDescarga, HoraDescarga)" +
-                    $" VALUES('{Log.ID}', '{LogDateTime.Date}', '{LogDateTime.TimeOfDay}', '{inoutType}', " +
-                    $"'{MachineComboBox.Items[CurrentConnectedIndex]}', '{today.Date}', '{today.TimeOfDay}')";
+                    $" VALUES('{Log.ID}', '{LogDateTime.ToShortDateString()}', '{LogDateTime.ToShortTimeString()}', '{inoutType}', " +
+                    $"'{MachineComboBox.Items[CurrentConnectedIndex]}', '{today.ToShortDateString()}', '{today.ToShortTimeString()}')";
 
                     command.ExecuteNonQuery();
 
-                    LogsFile.WriteLine("{} {} {} {}   {}", Log.ID.PadLeft(8, '0'), LogDateTime.Date,
-                        LogDateTime.TimeOfDay, inoutType, (CurrentConnectedIndex + 1).ToString().PadLeft(3, '0'));
+                    LogsFile.WriteLine($"{Log.ID.PadLeft(8, '0')} {LogDateTime.ToShortDateString()} {LogDateTime.ToShortTimeString()}" +
+                        $" {inoutType}   {(CurrentConnectedIndex + 1).ToString().PadLeft(3, '0')}");
                 }
                 LogsFile.Close();
                 connection.Close();
-                await connection.DisposeAsync();
+                connection.Dispose();
 
             }
         }
 
         private void DLLogsAllMachines_Click(object sender, EventArgs e)
         {
-
+            DownloadLogsFromAllMachines();
         }
 
-        private async void DLLogsthisMachine_Click(object sender, EventArgs e)
+        private void DLLogsthisMachine_Click(object sender, EventArgs e)
         {
             if (!MachConn.isConnected())
                 return;
             var eraseAfter = isClearAllLogs.Checked;
-            await Task.Run(() => MachConn.DownloadAttendance(eraseAfter));
-            UsersListBox.DataSource = MachConn.attendanceRecords;
-            await Task.Run(() => SaveLogs());
+            MachConn.DownloadAttendance(eraseAfter);
+            UpdateLogsListview();
+            SaveLogs();
+        }
+
+        private void UpdateLogsListview()
+        {
+            LogsListview.Items.Clear();
+            foreach (var Log in MachConn.attendanceRecords)
+            {
+                var tmpdata = new ListViewItem(Log.ToStringArray());
+                LogsListview.Items.Add(tmpdata);
+            }
         }
 
         #endregion
@@ -288,12 +377,16 @@ namespace ZKTecoDown
             if (MachConn.userInfo.Count < 1)
                 return;
 
-            var users2delete = UsersListBox.SelectedItems;
+            var users2delete = UsersListview.SelectedItems;
 
-            foreach (var user in users2delete)
+            foreach (ListViewItem user in users2delete)
             {
-                throw new NotImplementedException();
+                if (user.SubItems[2].Text != "0")
+                    continue;
+                MachConn.DeleteUser(user.SubItems[0].Text);
             }
+
+            UpdateUsersListview();
         }
 
         private void NewUserButton_Click(object sender, EventArgs e)
@@ -304,7 +397,10 @@ namespace ZKTecoDown
 
             if (dialogresult == DialogResult.OK)
             {
-
+                string Name = "";
+                string ID = "";
+                PopUp.GetData(ref ID, ref Name);
+                MachConn.AddUser(ID, Name);
             }
             else if (dialogresult == DialogResult.Cancel)
             {
@@ -319,7 +415,17 @@ namespace ZKTecoDown
                 return;
 
             await Task.Run(() => MachConn.DownloadUsers());
-            UsersListBox.DataSource = MachConn.userInfo;
+            UpdateUsersListview();
+        }
+
+        private void UpdateUsersListview()
+        {
+            UsersListview.Items.Clear();
+            foreach (var user in MachConn.userInfo)
+            {
+                var tmpdata = new ListViewItem(user.ToStringArray());
+                UsersListview.Items.Add(tmpdata);
+            }
         }
 
         #endregion
@@ -358,6 +464,37 @@ namespace ZKTecoDown
 
         #endregion
 
+        private void UsersListview_SizeChanged(object sender, EventArgs e)
+        {
+            ListView listView = sender as ListView;
+
+
+            var workingWidth = listView.Width;
+            var col1 = 0.25;
+            var col2 = 0.50;
+            var col3 = 0.25;
+
+
+            listView.Columns[0].Width = (int)(workingWidth * col1);
+            listView.Columns[1].Width = (int)(workingWidth * col2);
+            listView.Columns[2].Width = (int)(workingWidth * col3);
+        }
+
+        private void LogsListview_SizeChanged(object sender, EventArgs e)
+        {
+            ListView listView = sender as ListView;
+
+
+            var workingWidth = listView.Width;
+            var col1 = 0.25;
+            var col2 = 0.50;
+            var col3 = 0.25;
+
+
+            listView.Columns[0].Width = (int)(workingWidth * col1);
+            listView.Columns[1].Width = (int)(workingWidth * col2);
+            listView.Columns[2].Width = (int)(workingWidth * col3);
+        }
     }
 
 }

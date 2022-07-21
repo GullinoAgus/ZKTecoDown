@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using zkemkeeper;
+using System.Diagnostics;
 
 namespace ZKTecoDown
 {
@@ -15,6 +16,10 @@ namespace ZKTecoDown
         public int Privilege;
         public bool Enabled;
 
+        public string[] ToStringArray()
+        {
+            return new string[]  {ID, Name, Privilege.ToString()};
+        }
     }
     /* InOutModes
         0-Check-In Default
@@ -36,6 +41,37 @@ namespace ZKTecoDown
         public int Minute;
         public int Second;
         public int WorkCode;
+
+        public string[] ToStringArray()
+        {
+            var LogDate = new DateTime(Year, Month, Day, Hour, Minute, Second);
+            string inoutType;
+            switch (InOut)
+            {
+                case 0:
+                    inoutType = "E";
+                    break;
+                case 1:
+                    inoutType = "S";
+                    break;
+                case 2:
+                    inoutType = "1";
+                    break;
+                case 3:
+                    inoutType = "2";
+                    break;
+                case 4:
+                    inoutType = "3";
+                    break;
+                case 5:
+                    inoutType = "4";
+                    break;
+                default:
+                    inoutType = "E";
+                    break;
+            }
+            return new string[] { ID, inoutType, LogDate.ToString() };
+        }
     }
 
     internal class MachineConnection
@@ -43,12 +79,13 @@ namespace ZKTecoDown
         private zkemkeeper.CZKEM Machine = new();
         private bool Connected = false;
         private int LastErrorCode = 0;
-        public readonly string MachineAlias = new("Default");
+        public string MachineAlias { get; private set; }
         public readonly List<User> userInfo = new();
         public readonly List<AttendanceRecord> attendanceRecords = new();
 
         public MachineConnection()
         {
+            MachineAlias = new("Default")
         }
 
         ~MachineConnection()
@@ -61,6 +98,7 @@ namespace ZKTecoDown
             if (Machine.Connect_Net(ip, port))
             {
                 Connected = true;
+                this.MachineAlias = MachineAlias;
                 return Connected;
             }
             else
@@ -87,7 +125,7 @@ namespace ZKTecoDown
                 Machine.GetLastError(ref LastErrorCode);
                 return false;
             }
-
+            userInfo.Clear();
             bool reading = true;
             User tmpusr = new();
             while (reading)
@@ -98,14 +136,18 @@ namespace ZKTecoDown
                                                    out tmpusr.Password,
                                                    out tmpusr.Privilege,
                                                    out tmpusr.Enabled);
-                userInfo.Add(tmpusr);
-
+                
+                if (reading)
+                    userInfo.Add(tmpusr);
             }
             return true;
         }
 
         public bool DownloadAttendance(bool eraseAfterward)
         {
+
+            attendanceRecords.Clear();
+            
             if (!Machine.ReadGeneralLogData(0))
             {
                 Machine.GetLastError(ref LastErrorCode);
@@ -114,7 +156,7 @@ namespace ZKTecoDown
 
             bool reading = true;
             AttendanceRecord tmpattrec = new();
-            while (reading)
+            do
             {
                 reading = Machine.SSR_GetGeneralLogData(0,
                                                    out tmpattrec.ID,
@@ -127,9 +169,11 @@ namespace ZKTecoDown
                                                    out tmpattrec.Minute,
                                                    out tmpattrec.Second,
                                                    ref tmpattrec.WorkCode);
-                attendanceRecords.Add(tmpattrec);
+                if (reading)
+                    attendanceRecords.Add(tmpattrec);
+                
 
-            }
+            } while (reading);
             if (eraseAfterward)
             {
                 if (Machine.ClearGLog(0))
@@ -150,9 +194,19 @@ namespace ZKTecoDown
                 return false;
             }
 
+            DownloadUsers();
+
             return true;
         }
 
-
+        public bool AddUser(string ID, string Name)
+        {
+            if (!Machine.SSR_SetUserInfo(0, ID, Name, "", 0, true))
+            {
+                Machine.GetLastError(LastErrorCode);
+                return false;
+            }
+            return true;
+        }
     }
 }

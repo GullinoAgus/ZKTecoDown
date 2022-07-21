@@ -66,7 +66,7 @@
             this.Acceptbutton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.Acceptbutton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.Acceptbutton.Location = new System.Drawing.Point(46, 139);
-            this.Acceptbutton.Name = "AcceptButton";
+            this.Acceptbutton.Name = "Acceptbutton";
             this.Acceptbutton.Size = new System.Drawing.Size(75, 25);
             this.Acceptbutton.TabIndex = 0;
             this.Acceptbutton.Text = "Aceptar";
@@ -107,6 +107,11 @@
             // 
             this.UserID.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.UserID.Location = new System.Drawing.Point(171, 90);
+            this.UserID.Maximum = new decimal(new int[] {
+            99999999,
+            0,
+            0,
+            0});
             this.UserID.Name = "UserID";
             this.UserID.Size = new System.Drawing.Size(162, 23);
             this.UserID.TabIndex = 4;
