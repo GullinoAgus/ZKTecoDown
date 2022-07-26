@@ -9,33 +9,15 @@ Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ZKTecoDownloaderSetup", "ZK
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
-		Release|Any CPU = Release|Any CPU
-		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{25CF184F-DD66-428C-A17E-F4C7A21A2214}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{25CF184F-DD66-428C-A17E-F4C7A21A2214}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{25CF184F-DD66-428C-A17E-F4C7A21A2214}.Debug|x64.ActiveCfg = Debug|x64
-		{25CF184F-DD66-428C-A17E-F4C7A21A2214}.Debug|x64.Build.0 = Debug|x64
-		{25CF184F-DD66-428C-A17E-F4C7A21A2214}.Debug|x86.ActiveCfg = Debug|x86
-		{25CF184F-DD66-428C-A17E-F4C7A21A2214}.Debug|x86.Build.0 = Debug|x86
-		{25CF184F-DD66-428C-A17E-F4C7A21A2214}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{25CF184F-DD66-428C-A17E-F4C7A21A2214}.Release|Any CPU.Build.0 = Release|Any CPU
-		{25CF184F-DD66-428C-A17E-F4C7A21A2214}.Release|x64.ActiveCfg = Release|x64
-		{25CF184F-DD66-428C-A17E-F4C7A21A2214}.Release|x64.Build.0 = Release|x64
+		{25CF184F-DD66-428C-A17E-F4C7A21A2214}.Debug|x86.ActiveCfg = Release|x86
+		{25CF184F-DD66-428C-A17E-F4C7A21A2214}.Debug|x86.Build.0 = Release|x86
 		{25CF184F-DD66-428C-A17E-F4C7A21A2214}.Release|x86.ActiveCfg = Release|x86
 		{25CF184F-DD66-428C-A17E-F4C7A21A2214}.Release|x86.Build.0 = Release|x86
-		{29ED5C63-F1EA-4EC3-B052-D043220923AD}.Debug|Any CPU.ActiveCfg = Debug
-		{29ED5C63-F1EA-4EC3-B052-D043220923AD}.Debug|x64.ActiveCfg = Debug
-		{29ED5C63-F1EA-4EC3-B052-D043220923AD}.Debug|x64.Build.0 = Debug
-		{29ED5C63-F1EA-4EC3-B052-D043220923AD}.Debug|x86.ActiveCfg = Debug
-		{29ED5C63-F1EA-4EC3-B052-D043220923AD}.Release|Any CPU.ActiveCfg = Release
-		{29ED5C63-F1EA-4EC3-B052-D043220923AD}.Release|x64.ActiveCfg = Release
-		{29ED5C63-F1EA-4EC3-B052-D043220923AD}.Release|x64.Build.0 = Release
+		{29ED5C63-F1EA-4EC3-B052-D043220923AD}.Debug|x86.ActiveCfg = Release
 		{29ED5C63-F1EA-4EC3-B052-D043220923AD}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution

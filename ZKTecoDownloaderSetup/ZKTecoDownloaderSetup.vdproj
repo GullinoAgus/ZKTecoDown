@@ -633,15 +633,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:ZKTecoDownloader"
-        "ProductCode" = "8:{8E2C60B8-3D5D-4FA1-8BB7-8B4E03785BCB}"
-        "PackageCode" = "8:{A02E2B1F-5428-45B8-A176-10AA55437676}"
+        "ProductCode" = "8:{F20FD885-EE21-4A33-8378-AAA6BB730D61}"
+        "PackageCode" = "8:{E5EFD6F8-82F3-404B-9D85-FD51CE431B31}"
         "UpgradeCode" = "8:{079374AC-7B59-4ADD-854C-8654A41580D7}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.0"
+        "ProductVersion" = "8:1.2.0"
         "Manufacturer" = "8:Informatica Integral"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1183,7 +1183,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_A655432F42CA4B10873E5F7C30438D4B"
             {
-            "SourcePath" = "8:..\\ZKTecoDown\\obj\\Debug\\net6.0-windows\\apphost.exe"
+            "SourcePath" = "8:..\\ZKTecoDown\\obj\\x86\\Release\\net6.0-windows\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_0D048C69073E43BC90EBE2EA2EDF27D9"
