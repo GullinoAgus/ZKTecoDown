@@ -461,6 +461,10 @@ namespace ZKTecoDown
 
         private async void SetTimeButton_Click(object sender, EventArgs e)
         {
+
+            if (!Config.initconf.AutoDownLoad)
+                return;
+
             var time = TimePicker.Value;
             var hour = time.Hour;
             var minute = time.Minute;
