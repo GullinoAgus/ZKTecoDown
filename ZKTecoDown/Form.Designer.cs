@@ -55,6 +55,7 @@
             this.DateLogHeader = new System.Windows.Forms.ColumnHeader();
             this.ConfigTab = new System.Windows.Forms.TabPage();
             this.LayoutConfigTab = new System.Windows.Forms.TableLayoutPanel();
+            this.AutoDLLabel = new System.Windows.Forms.Label();
             this.MachineQuant = new System.Windows.Forms.Label();
             this.LogsDirectory = new System.Windows.Forms.Label();
             this.DBDirectory = new System.Windows.Forms.Label();
@@ -69,6 +70,7 @@
             this.SetTimeButton = new System.Windows.Forms.Button();
             this.DeveloperLabel = new System.Windows.Forms.Label();
             this.DeveloperName = new System.Windows.Forms.Label();
+            this.AutoDLCheckBox = new System.Windows.Forms.CheckBox();
             this.MDLTabControl.SuspendLayout();
             this.MConnectionTab.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -386,6 +388,7 @@
             this.LayoutConfigTab.ColumnCount = 2;
             this.LayoutConfigTab.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.LayoutConfigTab.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.LayoutConfigTab.Controls.Add(this.AutoDLLabel, 0, 5);
             this.LayoutConfigTab.Controls.Add(this.MachineQuant, 1, 1);
             this.LayoutConfigTab.Controls.Add(this.LogsDirectory, 1, 4);
             this.LayoutConfigTab.Controls.Add(this.DBDirectory, 1, 3);
@@ -396,12 +399,14 @@
             this.LayoutConfigTab.Controls.Add(this.MachineQuantLabel, 0, 1);
             this.LayoutConfigTab.Controls.Add(this.DLTimeLabel, 0, 0);
             this.LayoutConfigTab.Controls.Add(this.LayoutTimeConfig, 1, 0);
-            this.LayoutConfigTab.Controls.Add(this.DeveloperLabel, 0, 5);
-            this.LayoutConfigTab.Controls.Add(this.DeveloperName, 1, 5);
+            this.LayoutConfigTab.Controls.Add(this.DeveloperLabel, 0, 6);
+            this.LayoutConfigTab.Controls.Add(this.DeveloperName, 1, 6);
+            this.LayoutConfigTab.Controls.Add(this.AutoDLCheckBox, 1, 5);
             this.LayoutConfigTab.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LayoutConfigTab.Location = new System.Drawing.Point(3, 3);
             this.LayoutConfigTab.Name = "LayoutConfigTab";
-            this.LayoutConfigTab.RowCount = 6;
+            this.LayoutConfigTab.RowCount = 7;
+            this.LayoutConfigTab.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.LayoutConfigTab.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.LayoutConfigTab.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.LayoutConfigTab.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -410,6 +415,19 @@
             this.LayoutConfigTab.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.LayoutConfigTab.Size = new System.Drawing.Size(589, 448);
             this.LayoutConfigTab.TabIndex = 0;
+            // 
+            // AutoDLLabel
+            // 
+            this.AutoDLLabel.AutoSize = true;
+            this.AutoDLLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AutoDLLabel.Location = new System.Drawing.Point(3, 186);
+            this.AutoDLLabel.MaximumSize = new System.Drawing.Size(0, 39);
+            this.AutoDLLabel.MinimumSize = new System.Drawing.Size(0, 36);
+            this.AutoDLLabel.Name = "AutoDLLabel";
+            this.AutoDLLabel.Size = new System.Drawing.Size(288, 36);
+            this.AutoDLLabel.TabIndex = 24;
+            this.AutoDLLabel.Text = "Descarga automatica";
+            this.AutoDLLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // MachineQuant
             // 
@@ -568,7 +586,7 @@
             // 
             this.DeveloperLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.DeveloperLabel.AutoSize = true;
-            this.DeveloperLabel.Location = new System.Drawing.Point(115, 309);
+            this.DeveloperLabel.Location = new System.Drawing.Point(115, 327);
             this.DeveloperLabel.Name = "DeveloperLabel";
             this.DeveloperLabel.Size = new System.Drawing.Size(63, 15);
             this.DeveloperLabel.TabIndex = 21;
@@ -578,11 +596,24 @@
             // 
             this.DeveloperName.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.DeveloperName.AutoSize = true;
-            this.DeveloperName.Location = new System.Drawing.Point(323, 309);
+            this.DeveloperName.Location = new System.Drawing.Point(323, 327);
             this.DeveloperName.Name = "DeveloperName";
             this.DeveloperName.Size = new System.Drawing.Size(236, 15);
             this.DeveloperName.TabIndex = 22;
             this.DeveloperName.Text = "Agustin Luis Gullino de Informatica Integral";
+            // 
+            // AutoDLCheckBox
+            // 
+            this.AutoDLCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.AutoDLCheckBox.AutoCheck = false;
+            this.AutoDLCheckBox.AutoSize = true;
+            this.AutoDLCheckBox.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.AutoDLCheckBox.Enabled = false;
+            this.AutoDLCheckBox.Location = new System.Drawing.Point(297, 197);
+            this.AutoDLCheckBox.Name = "AutoDLCheckBox";
+            this.AutoDLCheckBox.Size = new System.Drawing.Size(289, 14);
+            this.AutoDLCheckBox.TabIndex = 23;
+            this.AutoDLCheckBox.UseVisualStyleBackColor = true;
             // 
             // MachineDL
             // 
@@ -655,5 +686,7 @@
         private ColumnHeader IDLogsHeader;
         private ColumnHeader InOutHeader;
         private ColumnHeader DateLogHeader;
+        private Label AutoDLLabel;
+        private CheckBox AutoDLCheckBox;
     }
 }

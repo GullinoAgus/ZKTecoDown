@@ -43,6 +43,7 @@ namespace ZKTecoDown
             MachineQuant.Text = Config.initconf.MachineQuant.ToString();
             DBDirectory.Text = Config.initconf.DatabasePath;
             LogsDirectory.Text = Config.initconf.LogsPath;
+            AutoDLCheckBox.Checked = Config.initconf.AutoDownLoad;
             TimePicker.Value = new DateTime(2000, 01, 01, Config.initconf.DLTime[0], Config.initconf.DLTime[1], 0);
 
             if (!File.Exists(Config.initconf.DatabasePath + "Descargas.mdb"))
@@ -222,7 +223,9 @@ namespace ZKTecoDown
             else
             {
                 trayIcon.Dispose();
-                scheduler.Shutdown();
+                if (scheduler is not null)
+                    scheduler.Shutdown();
+                
             }
 
         }
