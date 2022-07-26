@@ -56,12 +56,18 @@ namespace ZKTecoDown
                 }
                 catch (Exception e)
                 {
+                    using (StreamWriter ErrorLogFile = File.CreateText("./"))
+                    {
+                        ErrorLogFile.WriteLine("Error al crear la base de datos.");
+                        ErrorLogFile.WriteLine(e.ToString());
+                    }
                     MessageBox.Show($"Error al crear la base de datos.\n" +
                     $"Contacte con un tecnico.\n" +
                     e.ToString(),
                     "Error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
+
 
                     trayIcon.Visible = false;
                     Close();
@@ -71,7 +77,10 @@ namespace ZKTecoDown
 
             GetIpList();
 
-            BuildScheduleJob();
+            if (Config.initconf.AutoDownLoad)
+            {
+                BuildScheduleJob();
+            }
 
             HideManagmentOptions();
         }

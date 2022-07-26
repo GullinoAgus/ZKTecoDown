@@ -29,6 +29,10 @@ namespace ZKTecoDown
                 }
                 catch (Exception e)
                 {
+                    using (StreamWriter ErrorLogFile = File.CreateText("./"))
+                    {
+                        ErrorLogFile.WriteLine(e.ToString());
+                    }
                     MessageBox.Show("Error inesperado contacte a un tecnico.\n" +
                         e.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }

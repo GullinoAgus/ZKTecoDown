@@ -9,6 +9,7 @@ namespace ZKTecoDown
         public string Company;
         public int MachineQuant;
         public int[] DLTime;
+        public bool AutoDownLoad;
         public string DatabasePath;
         public string LogsPath;
 
@@ -17,6 +18,7 @@ namespace ZKTecoDown
             Company = "Default";
             MachineQuant = 0;
             DLTime = new int[2];
+            AutoDownLoad = false;
             DatabasePath = "";
             LogsPath = "";
         }
