@@ -545,7 +545,7 @@
             }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_0D048C69073E43BC90EBE2EA2EDF27D9"
             {
-            "DefaultLocation" = "8:[ProgramFiles64Folder][Manufacturer]\\[ProductName]"
+            "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\[ProductName]"
             "Name" = "8:#1925"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
@@ -588,17 +588,6 @@
                 {
                 }
             }
-            "{1525181F-901A-416C-8A58-119130FE478E}:_6559155ED19F4CC19336300A3BF255C4"
-            {
-            "Name" = "8:#1936"
-            "AlwaysCreate" = "11:FALSE"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Property" = "8:System64Folder"
-                "Folders"
-                {
-                }
-            }
             "{1525181F-901A-416C-8A58-119130FE478E}:_EAE3C9652C8B4837844FEF1A669B4CFA"
             {
             "Name" = "8:#1914"
@@ -633,15 +622,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:ZKTecoDownloader"
-        "ProductCode" = "8:{A0546192-AC10-456D-B683-54C26CC1C040}"
-        "PackageCode" = "8:{F069794E-ADD8-4FF3-B40C-9E252CC21888}"
+        "ProductCode" = "8:{403F5E46-9D57-462C-BE12-6B3AE9F5B250}"
+        "PackageCode" = "8:{4632755F-669E-4F16-88B0-CF34A4BE917F}"
         "UpgradeCode" = "8:{079374AC-7B59-4ADD-854C-8654A41580D7}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.2.4"
+        "ProductVersion" = "8:1.3.0"
         "Manufacturer" = "8:Informatica Integral"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -655,7 +644,7 @@
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
-        "TargetPlatform" = "3:1"
+        "TargetPlatform" = "3:0"
         "PreBuildEvent" = "8:"
         "PostBuildEvent" = "8:"
         "RunPostBuildEvent" = "3:0"
@@ -754,6 +743,20 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_59FA4171E8F348459591F12B08AC478C"
+            {
+            "Name" = "8:Descargado de Relojes"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_A655432F42CA4B10873E5F7C30438D4B"
+            "Folder" = "8:_34F808D6CD2445879C3A6851579DF448"
+            "WorkingFolder" = "8:_0D048C69073E43BC90EBE2EA2EDF27D9"
+            "Icon" = "8:"
+            "Feature" = "8:"
+            }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_6E1B13B12EFE450BB3BC891B58BEA7B6"
             {
             "Name" = "8:Descargador de Relojes"

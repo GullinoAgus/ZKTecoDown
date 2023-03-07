@@ -117,8 +117,8 @@
             Machine.Disconnect();
         }
         public bool DownloadUsers()
-        {   
-            log.Info("Descargando usuarios.")
+        {
+            log.Info("Descargando usuarios.");
             if (!Machine.ReadAllUserID(0))
             {
                 Machine.GetLastError(ref LastErrorCode);
