@@ -532,17 +532,6 @@
         }
         "Folder"
         {
-            "{1525181F-901A-416C-8A58-119130FE478E}:_0A7CC611CE884EF1932A69AF98B2597D"
-            {
-            "Name" = "8:#1928"
-            "AlwaysCreate" = "11:FALSE"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Property" = "8:StartupFolder"
-                "Folders"
-                {
-                }
-            }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_0D048C69073E43BC90EBE2EA2EDF27D9"
             {
             "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\[ProductName]"
@@ -755,20 +744,6 @@
             "Folder" = "8:_34F808D6CD2445879C3A6851579DF448"
             "WorkingFolder" = "8:_0D048C69073E43BC90EBE2EA2EDF27D9"
             "Icon" = "8:"
-            "Feature" = "8:"
-            }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_6E1B13B12EFE450BB3BC891B58BEA7B6"
-            {
-            "Name" = "8:Descargador de Relojes"
-            "Arguments" = "8:"
-            "Description" = "8:"
-            "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
-            "Transitive" = "11:FALSE"
-            "Target" = "8:_A655432F42CA4B10873E5F7C30438D4B"
-            "Folder" = "8:_0A7CC611CE884EF1932A69AF98B2597D"
-            "WorkingFolder" = "8:_0D048C69073E43BC90EBE2EA2EDF27D9"
-            "Icon" = "8:_A2539525E75D4280ABAD6AA920BA1205"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_7812D3320BA742438D4EDEB4E6F2AD43"
