@@ -69,6 +69,7 @@
 
     internal class MachineConnection
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private zkemkeeper.CZKEM Machine = new();
         private bool Connected = false;
         private int LastErrorCode = 0;
@@ -88,14 +89,17 @@
 
         public bool Connect(string MachineAlias, string ip, int port)
         {
+            log.Info($"Conectando a {MachineAlias} ({ip}:{port}).");
             if (Machine.Connect_Net(ip, port))
             {
                 Connected = true;
                 this.MachineAlias = MachineAlias;
+                log.Info($"Conexion exitosa a {MachineAlias} ({ip}:{port}).");
                 return Connected;
             }
             else
             {
+                log.Error("Error al conectar a {MachineAlias} ({ip}:{port}).");
                 Machine.GetLastError(ref LastErrorCode);
                 return Connected;
             }
@@ -109,13 +113,16 @@
         public void Disconnect()
         {
             Connected = false;
+            log.Info($"Desconexion.");
             Machine.Disconnect();
         }
         public bool DownloadUsers()
-        {
+        {   
+            log.Info("Descargando usuarios.")
             if (!Machine.ReadAllUserID(0))
             {
                 Machine.GetLastError(ref LastErrorCode);
+                log.Error("Error al descargar usuarios.");
                 return false;
             }
             userInfo.Clear();
@@ -133,12 +140,13 @@
                 if (reading)
                     userInfo.Add(tmpusr);
             }
+            log.Info($"Se descargaron {userInfo.Count()} usuarios.");
             return true;
         }
 
         public bool DownloadAttendance(bool eraseAfterward)
         {
-
+            log.Info("Comenzando descarga de fichadas");
             attendanceRecords.Clear();
 
             if (!Machine.ReadGeneralLogData(0))
@@ -149,6 +157,7 @@
 
             bool reading = true;
             AttendanceRecord tmpattrec = new();
+            int errCounter = 0;
             do
             {
                 reading = Machine.SSR_GetGeneralLogData(0,
@@ -167,15 +176,17 @@
 
 
             } while (reading);
-            if (eraseAfterward)
+            if (eraseAfterward && attendanceRecords.Count() > 0)
             {
                 if (Machine.ClearGLog(0))
                 {
+                    log.Error("Error al eliminar/descargar fichadas.");
                     Machine.GetLastError(ref LastErrorCode);
                     return false;
                 }
+                log.Info("Eliminacion de fichadas completa.");
             }
-
+            log.Info($"Se descargaron {attendanceRecords.Count()} fichadas.");
             return true;
         }
 
@@ -186,7 +197,7 @@
                 Machine.GetLastError(LastErrorCode);
                 return false;
             }
-
+            log.Info("Se elimino el usuario de ID " + ID);
             DownloadUsers();
 
             return true;
@@ -199,6 +210,7 @@
                 Machine.GetLastError(LastErrorCode);
                 return false;
             }
+            log.Info("Se añadio el usuario " + Name + " con ID " + ID);
             return true;
         }
     }

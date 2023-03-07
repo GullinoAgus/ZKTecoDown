@@ -6,6 +6,7 @@ namespace ZKTecoDown
         ///  The main entry point for the application.
         /// </summary>
         [STAThread]
+        
         static void Main()
         {
             //Block multiple instances from runing
@@ -29,10 +30,7 @@ namespace ZKTecoDown
                 }
                 catch (Exception e)
                 {
-                    using (StreamWriter ErrorLogFile = File.CreateText("./"))
-                    {
-                        ErrorLogFile.WriteLine(e.ToString());
-                    }
+             
                     MessageBox.Show("Error inesperado contacte a un tecnico.\n" +
                         e.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
