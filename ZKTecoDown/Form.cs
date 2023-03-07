@@ -1,4 +1,3 @@
-using Quartz;
 using System.Data.OleDb;
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
 
@@ -8,12 +7,6 @@ namespace ZKTecoDown
     public partial class MachineDL : Form
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        private NotifyIcon trayIcon = new();
-        private ContextMenuStrip contextMenu = new();
-        private ToolStripMenuItem exitMenuItem = new("Salir");
-        private IJobDetail? job;
-        private ITrigger? trigger;
-        private IScheduler? scheduler;
         private List<Tuple<string, string, int>> IPList = new();
         private MachineConnection MachConn = new();
         private int CurrentConnectedIndex = -1;
@@ -21,21 +14,8 @@ namespace ZKTecoDown
         {
             InitializeComponent();
 
-            Icon = new Icon(@"./icon.ico");
-
-            exitMenuItem.Click += new EventHandler(Exit);
-
-            contextMenu.Items.Add(exitMenuItem);
-
-            trayIcon.Text = "Descargador de relojes";
-            trayIcon.ContextMenuStrip = contextMenu;
-            trayIcon.DoubleClick += new EventHandler(DoubleClickTrayIcon);
-            trayIcon.Icon = Icon;
-            trayIcon.Visible = true;
-
             if (!Config.Initialize(@"./conf.ini"))
             {
-                trayIcon.Visible = false;
                 Close();
                 return;
             }
@@ -45,8 +25,6 @@ namespace ZKTecoDown
             MachineQuant.Text = Config.initconf.MachineQuant.ToString();
             DBDirectory.Text = Config.initconf.DatabasePath;
             LogsDirectory.Text = Config.initconf.LogsPath;
-            AutoDLCheckBox.Checked = Config.initconf.AutoDownLoad;
-            TimePicker.Value = new DateTime(2000, 01, 01, Config.initconf.DLTime[0], Config.initconf.DLTime[1], 0);
 
             if (!File.Exists(Config.initconf.DatabasePath + "Descargas.mdb"))
             {
@@ -70,19 +48,12 @@ namespace ZKTecoDown
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
 
-
-                    trayIcon.Visible = false;
                     Close();
                     return;
                 }
             }
 
             GetIpList();
-
-            if (Config.initconf.AutoDownLoad)
-            {
-                BuildScheduleJob();
-            }
 
             HideManagmentOptions();
         }
@@ -117,28 +88,6 @@ namespace ZKTecoDown
                 connection.DisposeAsync();
 
             }
-        }
-
-        private async void BuildScheduleJob()
-        {
-            // construct a scheduler factory using defaults
-
-            // get a scheduler
-            var schedulerFact = new Quartz.Impl.StdSchedulerFactory();
-            scheduler = await schedulerFact.GetScheduler();
-            await scheduler.Start();
-
-            job = JobBuilder.Create<DownloadJob>()
-                .WithIdentity("DownloadJob", "group1") // name "myJob", group "group1"
-                .Build();
-            job.JobDataMap.Put("MachineDL", this);
-
-            trigger = TriggerBuilder.Create()
-                .WithIdentity("trigger", "group1")
-                .WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(Config.initconf.DLTime[0], Config.initconf.DLTime[1]))
-                .Build();
-
-            await scheduler.ScheduleJob(job, trigger);
         }
 
         private bool CreateDB()
@@ -193,42 +142,6 @@ namespace ZKTecoDown
                 con.Close();
             PopUp.Dispose();
             return true;
-        }
-
-        #endregion
-
-        #region TrayIcon Events
-        private void Exit(object? Sender, EventArgs e)
-        {
-            trayIcon.Visible = false;
-            Close();
-        }
-
-        private void DoubleClickTrayIcon(object? Sender, EventArgs e)
-        {
-            if (WindowState == FormWindowState.Minimized)
-            {
-                WindowState = FormWindowState.Normal;
-                ShowInTaskbar = true;
-            }
-
-            Activate();
-        }
-
-        private void MachineDL_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            WindowState = FormWindowState.Minimized;
-            ShowInTaskbar = false;
-            if (trayIcon.Visible)
-                e.Cancel = true;
-            else
-            {
-                trayIcon.Dispose();
-                if (scheduler is not null)
-                    scheduler.Shutdown();
-                
-            }
-
         }
 
         #endregion
@@ -456,44 +369,6 @@ namespace ZKTecoDown
             {
                 var tmpdata = new ListViewItem(user.ToStringArray());
                 UsersListview.Items.Add(tmpdata);
-            }
-        }
-
-        #endregion
-
-        #region Config Events
-
-        private async void SetTimeButton_Click(object sender, EventArgs e)
-        {
-
-            if (!Config.initconf.AutoDownLoad)
-                return;
-
-            var time = TimePicker.Value;
-            var hour = time.Hour;
-            var minute = time.Minute;
-
-            // obtain a builder that would produce the trigger
-            TriggerBuilder tb = trigger.GetTriggerBuilder();
-            // update the schedule associated with the builder, and build the new trigger
-            var newTrigger = tb.WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(hour, minute))
-                .Build();
-
-            await scheduler.RescheduleJob(trigger.Key, newTrigger);
-            trigger = newTrigger;
-        }
-
-        #endregion
-
-        #region Job Class
-        public class DownloadJob : IJob
-        {
-            public async Task Execute(IJobExecutionContext context)
-            {
-                JobDataMap datamap = context.MergedJobDataMap;
-                MachineDL myMDL = (MachineDL)datamap["MachineDL"];
-                await Task.Run(new Action(myMDL.DownloadLogsFromAllMachines));
-
             }
         }
 
