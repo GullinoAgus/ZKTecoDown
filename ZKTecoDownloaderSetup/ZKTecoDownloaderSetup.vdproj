@@ -568,6 +568,17 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_D30C5E0FA37549B082C3BF0AF9448FE4"
+                    {
+                    "Name" = "8:logs"
+                    "AlwaysCreate" = "11:TRUE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_48EE5B12AC4D4A08A24071B216E59BB8"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
             "{1525181F-901A-416C-8A58-119130FE478E}:_158E5F74759347D8AC334555909B0644"
@@ -617,13 +628,6 @@
         }
         "LaunchCondition"
         {
-            "{836E08B8-0285-4809-BA42-01DB6754A45D}:_BE6B6E62C04B443C9217A31099B9DFD6"
-            {
-            "Name" = "8:AdminUser"
-            "Condition" = "8:AdminUser"
-            "Message" = "8:<Error Message>"
-            "InstallUrl" = "8:"
-            }
         }
         "Locator"
         {
@@ -638,7 +642,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:ZKTecoDownloader"
         "ProductCode" = "8:{56364A92-5A06-456A-BB42-0BCB15A560C8}"
-        "PackageCode" = "8:{50F4A45D-C551-4F9A-BFD7-CC4038A306B7}"
+        "PackageCode" = "8:{FD48448E-39D7-4BBA-9442-FDFEE0CC0072}"
         "UpgradeCode" = "8:{079374AC-7B59-4ADD-854C-8654A41580D7}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
