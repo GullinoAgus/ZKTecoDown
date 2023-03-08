@@ -155,6 +155,7 @@
             if (!Machine.ReadGeneralLogData(0))
             {
                 Machine.GetLastError(ref LastErrorCode);
+                log.Error($"Error al leer fichadas. Codigo {LastErrorCode}");
                 return false;
             }
 
@@ -183,7 +184,7 @@
             {
                 if (Machine.ClearGLog(0))
                 {
-                    log.Error("Error al eliminar/descargar fichadas.");
+                    log.Error($"Error al eliminar/descargar fichadas. Codigo {LastErrorCode}");
                     Machine.GetLastError(ref LastErrorCode);
                     return false;
                 }
