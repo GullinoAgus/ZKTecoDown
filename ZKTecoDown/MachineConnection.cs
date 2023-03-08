@@ -99,7 +99,7 @@
             }
             else
             {
-                log.Error("Error al conectar a {MachineAlias} ({ip}:{port}).");
+                log.Error($"Error al conectar a {MachineAlias} ({ip}:{port}).");
                 Machine.GetLastError(ref LastErrorCode);
                 return Connected;
             }

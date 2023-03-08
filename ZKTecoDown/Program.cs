@@ -25,6 +25,7 @@ namespace ZKTecoDown
                 try
                 {
                     ApplicationConfiguration.Initialize();
+                    log4net.Config.XmlConfigurator.Configure(new System.IO.FileInfo(@"App.config"));
                     Application.Run(new MachineDL());
 
                 }

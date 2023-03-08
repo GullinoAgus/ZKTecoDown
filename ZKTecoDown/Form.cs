@@ -1,13 +1,12 @@
 using Quartz;
 using System.Data.OleDb;
-[assembly: log4net.Config.XmlConfigurator(Watch = true)]
 
 namespace ZKTecoDown
 {
 
     public partial class MachineDL : Form
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger("ZKDownloader");
         private NotifyIcon trayIcon = new();
         private ContextMenuStrip contextMenu = new();
         private ToolStripMenuItem exitMenuItem = new("Salir");
