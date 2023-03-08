@@ -6,7 +6,7 @@ namespace ZKTecoDown
 
     public partial class MachineDL : Form
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger("ZKDownloader");
+        private static log4net.ILog? log;
         private NotifyIcon trayIcon = new();
         private ContextMenuStrip contextMenu = new();
         private ToolStripMenuItem exitMenuItem = new("Salir");
@@ -46,6 +46,10 @@ namespace ZKTecoDown
             LogsDirectory.Text = Config.initconf.LogsPath;
             AutoDLCheckBox.Checked = Config.initconf.AutoDownLoad;
             TimePicker.Value = new DateTime(2000, 01, 01, Config.initconf.DLTime[0], Config.initconf.DLTime[1], 0);
+
+            log4net.GlobalContext.Properties["logsPath"] = Config.initconf.LogsPath;
+            log4net.Config.XmlConfigurator.Configure();
+            log = log4net.LogManager.GetLogger("ZKDownloader");
 
             if (!File.Exists(Config.initconf.DatabasePath + "Descargas.mdb"))
             {

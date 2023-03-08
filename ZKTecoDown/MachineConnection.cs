@@ -69,7 +69,7 @@
 
     internal class MachineConnection
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger("Conexion");
         private zkemkeeper.CZKEM Machine = new();
         private bool Connected = false;
         private int LastErrorCode = 0;
