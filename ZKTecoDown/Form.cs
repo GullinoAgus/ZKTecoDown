@@ -51,6 +51,8 @@ namespace ZKTecoDown
             log4net.Config.XmlConfigurator.Configure();
             log = log4net.LogManager.GetLogger("ZKDownloader");
 
+            log.Info("Iniciando aplicacion...");
+
             if (!File.Exists(Config.initconf.DatabasePath + "Descargas.mdb"))
             {
                 try
