@@ -179,7 +179,7 @@
             } while (reading);
             if (eraseAfterward && attendanceRecords.Count() > 0)
             {
-                if (Machine.ClearGLog(0))
+                if (!Machine.ClearGLog(0))
                 {
                     Machine.GetLastError(ref LastErrorCode);
                     log.Error($"Error al eliminar/descargar fichadas. Codigo {LastErrorCode}");
