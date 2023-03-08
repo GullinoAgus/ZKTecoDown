@@ -15,7 +15,7 @@ namespace ZKTecoDown
             {
                 if (!isAnotherInstanceOpen)
                 {
-                    MessageBox.Show("El programa ya se esta ejecutando, revise la bandeja de aplicaciones.",
+                    MessageBox.Show("El programa ya se esta ejecutando.",
                         "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
