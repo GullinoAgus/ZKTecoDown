@@ -282,7 +282,7 @@ namespace ZKTecoDown
 
                     command.ExecuteNonQuery();
 
-                    LogsFile.WriteLine($"{Log.ID.PadLeft(8, '0')} {LogDateTime.ToShortDateString()} {LogDateTime.ToShortTimeString()}" +
+                    LogsFile.WriteLine($"{Log.ID.PadLeft(8, '0')} {LogDateTime.ToString("dd/MM/yyyy")} {LogDateTime.ToString("HH:mm")}" +
                         $" {inoutType}   {(CurrentConnectedIndex + 1).ToString().PadLeft(3, '0')}");
                 }
                 LogsFile.Close();
