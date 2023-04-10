@@ -605,7 +605,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:ZKTecoDownloader"
         "ProductCode" = "8:{9D8793CA-8780-4591-92EF-D088897A2FF3}"
-        "PackageCode" = "8:{4AADA5CC-D41A-4E62-B742-53727FAB6D05}"
+        "PackageCode" = "8:{0C634113-29E9-41EF-8B4D-B86398F6BB79}"
         "UpgradeCode" = "8:{079374AC-7B59-4ADD-854C-8654A41580D7}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
