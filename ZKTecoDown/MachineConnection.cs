@@ -147,7 +147,7 @@
             return true;
         }
 
-        public bool DownloadAttendance(bool eraseAfterward)
+        public bool DownloadAttendance()
         {
             log.Info("Comenzando descarga de fichadas");
             attendanceRecords.Clear();
@@ -183,7 +183,13 @@
 
 
             } while (reading);
-            if (eraseAfterward && attendanceRecords.Count() > 0)
+            
+            log.Info($"Se descargaron {attendanceRecords.Count()} fichadas.");
+            DialogResult eraseAfterward = MessageBox.Show($"Se descargaron {attendanceRecords.Count()} fichadas del reloj {MachineAlias}. ¿Quiere eliminarlas del reloj?",
+                        "¿Borrar fichadas?",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question);
+            if (eraseAfterward == DialogResult.Yes && attendanceRecords.Count() > 0)
             {
                 if (!Machine.ClearGLog(0))
                 {
@@ -193,7 +199,7 @@
                 }
                 log.Info("Eliminacion de fichadas completa.");
             }
-            log.Info($"Se descargaron {attendanceRecords.Count()} fichadas.");
+            
             return true;
         }
 

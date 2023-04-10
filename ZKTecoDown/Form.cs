@@ -11,9 +11,9 @@ namespace ZKTecoDown
         private int CurrentConnectedIndex = -1;
         public MachineDL()
         {
-            
+
             InitializeComponent();
-            
+
             if (!Config.Initialize(@"./conf.ini"))
             {
                 Close();
@@ -214,6 +214,7 @@ namespace ZKTecoDown
 
         private void DownloadLogsFromAllMachines()
         {
+
             foreach (var ip in IPList)
             {
                 if (!MachConn.Connect(ip.Item1, ip.Item2, ip.Item3))
@@ -226,7 +227,8 @@ namespace ZKTecoDown
                 }
                 else
                 {
-                    MachConn.DownloadAttendance(true);
+                    CurrentConnectedIndex = IPList.IndexOf(ip);
+                    MachConn.DownloadAttendance();
                     SaveLogs();
                     MachConn.Disconnect();
                 }
@@ -301,8 +303,7 @@ namespace ZKTecoDown
         {
             if (!MachConn.isConnected())
                 return;
-            var eraseAfter = isClearAllLogs.Checked;
-            MachConn.DownloadAttendance(eraseAfter);
+            MachConn.DownloadAttendance();
             UpdateLogsListview();
             SaveLogs();
         }

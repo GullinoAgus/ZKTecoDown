@@ -48,7 +48,6 @@
             MLogsMangTab = new TabPage();
             tableLayoutPanel3 = new TableLayoutPanel();
             DLLogsthisMachine = new Button();
-            isClearAllLogs = new CheckBox();
             LogsListview = new ListView();
             IDLogsHeader = new ColumnHeader();
             InOutHeader = new ColumnHeader();
@@ -286,7 +285,6 @@
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel3.Controls.Add(DLLogsthisMachine, 0, 0);
-            tableLayoutPanel3.Controls.Add(isClearAllLogs, 0, 1);
             tableLayoutPanel3.Controls.Add(LogsListview, 0, 2);
             tableLayoutPanel3.Dock = DockStyle.Fill;
             tableLayoutPanel3.Location = new Point(3, 3);
@@ -312,20 +310,6 @@
             DLLogsthisMachine.UseVisualStyleBackColor = true;
             DLLogsthisMachine.Click += DLLogsthisMachine_Click;
             // 
-            // isClearAllLogs
-            // 
-            isClearAllLogs.Anchor = AnchorStyles.None;
-            isClearAllLogs.AutoSize = true;
-            isClearAllLogs.Checked = true;
-            isClearAllLogs.CheckState = CheckState.Checked;
-            tableLayoutPanel3.SetColumnSpan(isClearAllLogs, 2);
-            isClearAllLogs.Location = new Point(208, 39);
-            isClearAllLogs.Name = "isClearAllLogs";
-            isClearAllLogs.Size = new Size(172, 19);
-            isClearAllLogs.TabIndex = 9;
-            isClearAllLogs.Text = "Borrar registros al descargar";
-            isClearAllLogs.UseVisualStyleBackColor = true;
-            // 
             // LogsListview
             // 
             LogsListview.AllowColumnReorder = true;
@@ -334,9 +318,9 @@
             LogsListview.Dock = DockStyle.Fill;
             LogsListview.FullRowSelect = true;
             LogsListview.GridLines = true;
-            LogsListview.Location = new Point(3, 64);
+            LogsListview.Location = new Point(3, 39);
             LogsListview.Name = "LogsListview";
-            LogsListview.Size = new Size(583, 381);
+            LogsListview.Size = new Size(583, 406);
             LogsListview.TabIndex = 10;
             LogsListview.UseCompatibleStateImageBehavior = false;
             LogsListview.View = View.Details;
@@ -555,7 +539,6 @@
         private TabPage MUserMangTab;
         private TabPage MLogsMangTab;
         private Button DLLogsthisMachine;
-        private CheckBox isClearAllLogs;
         private TableLayoutPanel tableLayoutPanel2;
         private Button DLUsers;
         private Button DeleteUserButton;
